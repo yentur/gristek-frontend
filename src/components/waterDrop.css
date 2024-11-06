@@ -1,0 +1,132 @@
+.container2 {
+    position: relative;
+    width: 100%;
+    height: 400px;
+  }
+  
+  .drop {
+    position: absolute;
+    left: calc(50% - 27.5px);
+    top: -150px;
+    width: 55px;
+    height: 70px;
+    animation: drop-anim 3s infinite;
+  }
+  
+  .drop svg {
+    width: 100%;
+    height: 100%;
+    filter: blur(2px);
+  }
+  
+  .drop svg path {
+    fill: #2e7fe1;
+  }
+  
+
+  @keyframes drop-anim {
+    0% {
+      top: -150px;
+      transform: scale(0.25);
+      opacity: 1;
+    }
+    50% {
+      top: 180px;
+      transform: scale(0.65);
+      opacity: 1;
+    }
+    100% {
+      top: 180px;  
+      transform: scale(0);
+      opacity: 0;   
+    }
+  }
+  
+  
+  .box {
+    height: 280px;
+    width: 280px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #7c7c7c40;
+    border-radius: 100%;
+    overflow: hidden;
+  }
+  
+  .box .percent {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 64px;
+  }
+  
+  .box .water {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    transform: translate(0, 100%);
+    background: #2e7fe1;
+    transition: all 0.3s;
+  }
+  
+  .box .water_wave {
+    width: 200%;
+    position: absolute;
+    bottom: 100%;
+  }
+  
+  .box .water_wave_back {
+    right: 0;
+    fill: #d5f5ff;
+    animation: wave-back 1.4s infinite linear;
+  }
+  
+  .box .water_wave_front {
+    left: 0;
+    fill: #2e7fe1;
+    margin-bottom: -1px;
+    animation: wave-front 0.7s infinite linear;
+  }
+  
+  @keyframes wave-front {
+    100% {
+      transform: translate(-50%, 0);
+    }
+  }
+  
+  @keyframes wave-back {
+    100% {
+      transform: translate(50%, 0);
+    }
+  }
+  
+  .water.wave-visible {
+    transform: translate(0, 0%);
+  }
+  
+  .water_wave_back,
+  .water_wave_front {
+    animation-play-state: paused;
+  }
+  
+  .box .water_wave_back {
+    animation-duration: 2s; 
+  }
+  
+  .box .water_wave_front {
+    animation-duration: 1.5s; 
+  }
+  
