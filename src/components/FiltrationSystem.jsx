@@ -1,12 +1,12 @@
 import React from 'react';
-
+import kutu_image from '../dist/images/gristek_kutu1.png'
 const FiltrationSystem = () => {
     return (
       <section className="bg-cover bg-center  bg-back py-20">
         <div className="container mx-auto flex flex-col lg:flex-row items-center px-4 lg:px-0">
           <div className="lg:w-1/2">
             <img
-              src="https://gristek.com/wp-content/uploads/2023/08/gristek-kutu1.png"
+              src={kutu_image}
               alt="Filtration System"
               className="w-full h-auto rounded-lg"
             />

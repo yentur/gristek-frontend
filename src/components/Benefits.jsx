@@ -1,12 +1,12 @@
 import React from 'react';
-
+import gristek_image from '../dist/images/gristek-fayda1.jpg'
 const Benefits = () => {
     return (
       <section className="py-20 bg-gray-100">
         <div className="container mx-auto flex flex-col lg:flex-row items-center px-4 lg:px-0">
           <div className="lg:w-1/2">
             <img
-              src="https://gristek.com/wp-content/uploads/2023/08/gristek-fayda1.jpg"
+              src={gristek_image}
               alt="Benefits"
               className="w-full h-auto rounded-lg"
             />

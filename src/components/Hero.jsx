@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import "./water.css";
-
+import image from "../dist/images/1-1.png"
 const Hero = () => {
   const [totalSavings, setTotalSavings] = useState(null);
   const [dailySavings, setDailySavings] = useState(null);
@@ -28,7 +28,7 @@ const Hero = () => {
       <div className="container mx-auto flex flex-col lg:flex-row items-center px-4 lg:px-0">
         <div className="lg:w-1/2">
           <img
-            src="https://gristek.com/wp-content/uploads/2023/08/1-1.png"
+            src={image}
             alt="Water Conservation"
             className="w-full h-auto"
           />
@@ -56,7 +56,7 @@ const Hero = () => {
             </div>
 
             <a
-              href="http://tasarruf.gristek.com/"
+              href="/tasarruf"
               className="bg-pc-200 hover:bg-pc-100 text-white font-medium py-3 px-6 rounded-md mt-6 inline-block"
             >
               Tasarruf Hesaplama Aracı

@@ -1,12 +1,12 @@
 import React from 'react';
-
+import logo from "../dist/images/logo_.png"
 const Footer = () => {
     return (
       <footer className="bg-gray-800 py-8 w-full ">
         <div className="container mx-auto flex flex-col lg:flex-row justify-between items-center px-4 lg:px-0">
           <div className="mb-4 lg:mb-0">
             <img
-              src="https://gristek.com/wp-content/uploads/elementor/thumbs/gristek-logo2-white-q0yyabw0ghilxlt3e8nqo3i309hdsg0pj4gyhteikw.png"
+              src={logo}
               alt="Gristek Logo"
               className="h-12 w-auto"
             />
@@ -42,7 +42,6 @@ const Footer = () => {
               </a>{' '}
               | Dijital Performans Ajansı
             </p>
-            {/* Add payment icons if needed */}
           </div>
         </div>
       </footer>

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import image from "../dist/images/nasil-yapiyoruz1-1.png"
 const HowWeDoIt = () => {
     return (
       <section className="py-20">
@@ -13,7 +13,7 @@ const HowWeDoIt = () => {
             suyun geri dönüşümünü sağlıyoruz.
           </p>
           <img
-            src="https://gristek.com/wp-content/uploads/2023/08/nasil-yapiyoruz1-1.png"
+            src={image}
             alt="How We Do It Image"
             className="w-full h-auto mx-auto"
           />

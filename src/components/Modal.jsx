@@ -36,16 +36,16 @@ const Modal = () => {
     setIsOpen(true);
   }, []);
 
-  // Update counters
+
   useEffect(() => {
     const totalInterval = setInterval(() => {
       setCounters(prev => ({
         ...prev,
-        total: prev.total < savingsData.totalSavings 
+        total: true 
           ? prev.total + 1 
           : savingsData.totalSavings
       }));
-    }, 50);
+    }, 1500);
 
     const dailyInterval = setInterval(() => {
       setCounters(prev => ({
@@ -54,7 +54,7 @@ const Modal = () => {
           ? prev.daily + 1 
           : savingsData.dailySavings
       }));
-    }, 50);
+    }, 1500);
 
     return () => {
       clearInterval(totalInterval);

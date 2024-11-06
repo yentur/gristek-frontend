@@ -1,5 +1,5 @@
 import React from 'react';
-
+import gristek_image from '../dist/images/gristek-nedir1.jpg'
 const About = () => {
     return (
       <section className=" bg-cover bg-center  bg-back py-20">
@@ -23,7 +23,7 @@ const About = () => {
           </div>
           <div className="lg:w-1/2 mt-8 lg:mt-0 lg:pr-16">
             <img
-              src="https://gristek.com/wp-content/uploads/2023/08/gristek-nedir1.jpg"
+              src={gristek_image}
               alt="About Image"
               className="w-full h-auto rounded-lg"
             />

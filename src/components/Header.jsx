@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import logo from "../dist/images/logo2.png"
 const Header = () => {
   const [scrollDirection, setScrollDirection] = useState('up');
   const [menuOpen, setMenuOpen] = useState(false);  // Menü açılma durumunu takip etmek için state
@@ -25,7 +25,7 @@ const Header = () => {
         {/* Logo */}
         <a href="/" className=" flex items-center justify-center">
           <img
-            src="https://gristek.com/wp-content/uploads/2023/06/gristek-logo2-white.png"
+            src={logo}
             alt="Gristek Logo"
             className="h-8  md:h-16 md:w-auto"
           />
