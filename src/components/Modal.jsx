@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import "./water.css";
 import WaterDrop from './WaterDrop';
+import config from '../config.json'; 
 
 const Modal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +18,7 @@ const Modal = () => {
   useEffect(() => {
     const fetchSavingsData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/tasarruf');
+        const response = await fetch(`${config.apiUrl}/tasarruf/`);
         const data = await response.json();
         setSavingsData({
           totalSavings: data.totalSavings || 0,
