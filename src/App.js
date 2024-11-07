@@ -1,4 +1,4 @@
-import './App.css';
+import './main.css';
 import Homepage from './components/homepage';
 import ContactPage from './components/ContactPage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
