@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import "./water.css";
 import WaterDrop from './WaterDrop';
-import config from '../config.json'; 
+import config from '../config.json';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 
 const Modal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +14,21 @@ const Modal = () => {
     total: 0,
     daily: 0
   });
+
+  const data = [
+    { name: "Oca", value: 300 },
+    { name: "Şub", value: 400 },
+    { name: "Mar", value: 400 },
+    { name: "Nis", value: 800 },
+    { name: "May", value: 600 },
+    { name: "Haz", value: 1000 },
+    { name: "Tem", value: 900 },
+    { name: "Ağu", value: 700 },
+    { name: "Eyl", value: 1100 },
+    { name: "Eki", value: 1200 },
+    { name: "Kas", value: 900 },
+    { name: "Ara", value: 1300 },
+  ];
 
   // Fetch savings data
   useEffect(() => {
@@ -42,8 +58,8 @@ const Modal = () => {
     const totalInterval = setInterval(() => {
       setCounters(prev => ({
         ...prev,
-        total: true 
-          ? prev.total + 1 
+        total: true
+          ? prev.total + 1
           : savingsData.totalSavings
       }));
     }, 1500);
@@ -51,8 +67,8 @@ const Modal = () => {
     const dailyInterval = setInterval(() => {
       setCounters(prev => ({
         ...prev,
-        daily: prev.daily < savingsData.dailySavings 
-          ? prev.daily + 1 
+        daily: prev.daily < savingsData.dailySavings
+          ? prev.daily + 1
           : savingsData.dailySavings
       }));
     }, 1500);
@@ -79,11 +95,11 @@ const Modal = () => {
 
   return (
     <dialog id="my_modal_3" className={`modal ${isOpen ? 'modal-open' : ''}`}>
-      <div className="modal-box max-w-3xl h-full">
+      <div className="modal-box max-w-4xl" style={{ backgroundColor: 'white' }}>
         <form method="dialog" onSubmit={(e) => { e.preventDefault(); closeModal(); }}>
-          <button 
-            type="button" 
-            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" 
+          <button
+            type="button"
+            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
             onClick={closeModal}
           >
             ✕
@@ -91,18 +107,42 @@ const Modal = () => {
         </form>
 
         <div className="flex flex-col items-center h-full w-full">
-            <WaterDrop />
+          {/* <WaterDrop /> */}
           <div className="middle-modal flex flex-col items-center">
-            <h1 className="mb-2">Toplam Yaptığımız Tasarruf</h1>
-            <div className="flex justify-center items-center">
+            <h3>Günlük Tasarruf</h3>
+
+            <div className="flex justify-center items-center counter">
               {formatNumber(counters.total)}
-              <h2 className="ml-2">M³</h2>
+              <h2 className="ml-2">m³</h2>
             </div>
-            
-            <h1 className="font-bold mt-4 mb-2">Günlük Tasarruf Miktarı</h1>
-            <div className="flex justify-center items-center">
+
+            <div className="chart">
+              <BarChart
+                width={800}
+                height={300}
+                data={data}
+                margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                <XAxis dataKey="name" tick={{ fontSize: 14 }} axisLine={false} />
+                <YAxis dataKey="value" tick={{ fontSize: 14 }} axisLine={false} />
+                <Bar
+                  dataKey="value"
+                  fill="#FF4267"
+                  radius={[50, 50, 50, 50]}
+                  barSize={16}
+                  animationBegin={0}
+                  animationDuration={1500}
+                  animationEasing="ease-in-out"
+                />
+              </BarChart>
+
+            </div>
+
+            <h3>Bugüne Kadar <span className='font-bold'>GRİSTEK</span> İle Yapılan Toplam Tasarruf</h3>
+            <div className="flex justify-center items-center counter">
               {formatNumber(counters.daily)}
-              <h2 className="ml-2">M³</h2>
+              <h2 className="ml-2">m³</h2>
             </div>
           </div>
         </div>
