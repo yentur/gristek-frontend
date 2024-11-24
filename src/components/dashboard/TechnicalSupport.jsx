@@ -3,7 +3,7 @@ import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 
 const TechnicalSupport = () => {
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col items-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="flex-1 p-6 overflow-y-auto">
             {/* Sayfa Başlığı */}
             <h1 className="text-4xl font-extrabold text-gray-800 mb-8 text-center">
                 Teknik Destek
