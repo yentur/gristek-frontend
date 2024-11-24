@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Hero from "./Hero";
 import Features from "./Features";
@@ -9,11 +8,27 @@ import Benefits from "./Benefits";
 import FiltrationSystem from "./FiltrationSystem";
 import UsageAreas from "./UsageAreas";
 import Footer from "./Footer";
-import Modal from "./Modal"
+import Modal from "./Modal";
 
 const Homepage = () => {
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    // sessionStorage'da "isModalShown" kontrol edilir
+    const isModalShown = sessionStorage.getItem("isModalShown");
+
+    if (!isModalShown) {
+      setShowModal(true); // Modal açılır
+      sessionStorage.setItem("isModalShown", "true"); // Oturum boyunca kaydedilir
+    }
+  }, []);
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   return (
-    <div className="bg-white font-sans ">
+    <div className="bg-white font-sans">
       <Header />
       <div className="mt-20">
         <Hero />
@@ -24,7 +39,8 @@ const Homepage = () => {
         <FiltrationSystem />
         <UsageAreas />
         <Footer />
-        <Modal/>
+        {/* Modal sadece showModal true ise gösterilir */}
+        {showModal && <Modal onClose={closeModal} />}
       </div>
     </div>
   );

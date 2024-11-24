@@ -3,6 +3,7 @@ import "./water.css";
 import WaterDrop from './WaterDrop';
 import config from '../config.json';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
+import { Link } from 'react-router-dom';
 
 const Modal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -144,6 +145,18 @@ const Modal = () => {
               {formatNumber(counters.daily)}
               <h2 className="ml-2">m³</h2>
             </div>
+
+            <h2 className="text-lg font-semibold text-gray-800 mt-4">
+              Detaylı analiz için{" "}
+              <Link
+                to="/analiz"
+                className="text-blue-600 hover:underline hover:text-blue-800 transition duration-200"
+              >
+                Analiz
+              </Link>{" "}
+              sayfamıza göz atabilirsin.
+            </h2>
+
           </div>
         </div>
       </div>
