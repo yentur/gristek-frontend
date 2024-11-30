@@ -66,15 +66,15 @@ const CalculaterContent = () => {
   };
 
   return (
-    <div className="flex w-full h-full justify-center items-center gap-4 p-10">
+    <div className="flex flex-col lg:flex-row lg:items-start w-full h-full justify-center lg:gap-8 p-4 lg:p-10">
+      {/* Form Bölümü */}
       <div
-        className={`bg-white p-8 rounded-lg shadow-lg transition-all duration-500 ease-in-out ${showResults ? 'w-1/3 translate-x-0' : 'w-full max-w-4xl'
-          }`}
+        className={`bg-white p-6 rounded-lg shadow-lg transition-all duration-500 ease-in-out w-full lg:w-2/3`}
       >
-        <h1 className="text-2xl font-bold text-gray-800 mb-4">Tasarruf Hesaplama Aracı</h1>
-        <h2 className="text-lg font-medium text-gray-600 mb-6">Lütfen bilgileri eksiksiz doldurunuz.</h2>
+        <h1 className="text-xl lg:text-2xl font-bold text-gray-800 mb-4 text-center lg:text-left">Tasarruf Hesaplama Aracı</h1>
+        <h2 className="text-sm lg:text-lg font-medium text-gray-600 mb-6 text-center lg:text-left">Lütfen bilgileri eksiksiz doldurunuz.</h2>
 
-        <div className="space-y-6">
+        <div className="space-y-4 lg:space-y-6">
           {/* Şehir Seçimi */}
           <div>
             <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-2">Şehir Seçiniz</label>
@@ -180,10 +180,10 @@ const CalculaterContent = () => {
 
       {showResults && (
         <div
-          className={`bg-white p-8 rounded-lg shadow-lg transition-all duration-500 ease-in-out w-1/3`}
+          className="bg-white p-6 rounded-lg shadow-lg transition-all duration-500 ease-in-out w-full lg:w-1/3 mt-6 lg:mt-0"
         >
-          <h1 className="font-bold text-2xl text-blue-600 mb-6">🎉 KAZANCINIZ!</h1>
-          <div className="space-y-6">
+          <h1 className="font-bold text-xl lg:text-2xl text-blue-600 mb-4 lg:mb-6">🎉 KAZANCINIZ!</h1>
+          <div className="space-y-4 lg:space-y-6">
             <div className="flex items-center gap-4">
               <span className="text-blue-500 text-3xl">💰</span>
               <div>
