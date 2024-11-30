@@ -13,10 +13,9 @@ const Corporate = () => {
         setIsReported(true);
     };
 
-    console.log(activePage)
-
     return (
-        <div className="flex h-screen bg-gray-50">
+        <div className="flex flex-col md:flex-row h-screen bg-gray-50">
+            {/* Sidebar */}
             <Sidebar
                 activePage={activePage}
                 setActivePage={setActivePage}
@@ -25,11 +24,16 @@ const Corporate = () => {
                 isReported={isReported}
             />
 
+            {/* Content Area */}
             <div className="flex-1 flex flex-col">
+                {/* Topbar */}
                 <Topbar organizationName="Çorum Belediyesi" />
 
-                {activePage === "home" && <MainContent />}
-                {activePage === "support" && <TechnicalSupport />}
+                {/* Main Content */}
+                <div className="flex-1 p-4 md:p-6 overflow-auto bg-gray-50">
+                    {activePage === "home" && <MainContent />}
+                    {activePage === "support" && <TechnicalSupport />}
+                </div>
             </div>
         </div>
     );

@@ -139,28 +139,30 @@ const MainContent = () => {
             </div>
 
             {/* Çubuk Grafik */}
-            <div className="bg-white shadow-md rounded-lg p-6 mb-6 w-full h-[400px]">
-                <h2 className="text-xl font-semibold text-gray-800 mb-4">Tasarruf Miktarı</h2>
-                <Bar data={data} options={options} />
+            <div className="bg-white shadow-md rounded-lg p-4 sm:p-6 mb-4 sm:mb-6 w-full h-64 sm:h-80 md:h-[400px] lg:h-[500px]">
+                <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2 sm:mb-4">Tasarruf Miktarı</h2>
+                <div className="w-full h-full">
+                    <Bar data={data} options={options} />
+                </div>
             </div>
 
             {/* Metrikler */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {/* Toplam Kurumdaki Cihaz Sayısı */}
-                <div className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
+                <div className="bg-white shadow-md rounded-lg p-4 md:p-6 border border-gray-200">
                     <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-xl font-semibold text-gray-800 flex items-center">
-                            <FaBox className="text-blue-500 mr-3 text-3xl" />
+                        <h2 className="text-lg md:text-xl font-semibold text-gray-800 flex items-center">
+                            <FaBox className="text-blue-500 mr-3 text-2xl md:text-3xl" />
                             Toplam Kurumdaki Cihaz Sayısı
                         </h2>
                     </div>
-                    <p className="text-3xl font-bold text-gray-800">{devices.length}</p>
-                    <p className="mt-2 text-sm text-gray-600">
+                    <p className="text-2xl md:text-3xl font-bold text-gray-800">{devices.length}</p>
+                    <p className="mt-2 text-sm md:text-base text-gray-600">
                         Kurumda aktif toplam cihaz sayısı. Daha fazla detay için aşağıya tıklayın.
                     </p>
                     <button
                         onClick={() => setIsModalOpen(true)}
-                        className="mt-4 bg-gradient-to-r from-blue-500 to-blue-700 text-white px-5 py-2 rounded-full shadow-md hover:shadow-lg hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform transform hover:-translate-y-1"
+                        className="mt-4 bg-gradient-to-r from-blue-500 to-blue-700 text-white px-4 py-2 md:px-5 md:py-2 rounded-full shadow-md hover:shadow-lg hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform transform hover:-translate-y-1"
                     >
                         Detaylı Bilgi
                     </button>
@@ -174,72 +176,70 @@ const MainContent = () => {
                     )}
                 </div>
 
-
                 {/* Toplam Su Tasarrufu */}
-                <div className="bg-gradient-to-r from-blue-600 to-blue-800 shadow-lg rounded-lg p-6 text-white">
-                    <div className="flex items-center justify-between">
-                        <h2 className="text-xl font-semibold flex items-center">
-                            <FaTint className="text-white mr-3 text-3xl" />
+                <div className="bg-gradient-to-r from-blue-600 to-blue-800 shadow-lg rounded-lg p-4 md:p-6 text-white">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+                        <h2 className="text-lg md:text-xl font-semibold flex items-center">
+                            <FaTint className="text-white mr-3 text-2xl md:text-3xl" />
                             Toplam Su Tasarrufu
                         </h2>
-                        <div className="bg-white text-blue-700 px-4 py-2 rounded-full shadow-md font-semibold text-lg">
+                        <div className="mt-3 md:mt-0 bg-white text-blue-700 px-3 py-2 md:px-4 md:py-2 rounded-full shadow-md font-semibold text-base md:text-lg text-center">
                             {formatNumber(savingWaterTon)} m³
                         </div>
                     </div>
-                    <p className="mt-4 text-sm text-blue-200">
+                    <p className="mt-4 text-sm md:text-base text-blue-200">
                         Bu ay toplam su tasarrufunuz. Daha fazla bilgi için cihaz detaylarına göz atabilirsiniz.
                     </p>
                 </div>
 
                 {/* Rezervde Duran Su Miktarı */}
-                <div className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-                    <div className="flex items-center justify-between">
-                        <h2 className="text-xl font-semibold text-gray-800 flex items-center">
-                            <FaTint className="text-blue-500 mr-3 text-3xl" />
+                <div className="bg-white shadow-md rounded-lg p-4 md:p-6 border border-gray-200">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+                        <h2 className="text-lg md:text-xl font-semibold text-gray-800 flex items-center">
+                            <FaTint className="text-blue-500 mr-3 text-2xl md:text-3xl" />
                             Rezervde Duran Su Miktarı
                         </h2>
-                        <div className="bg-blue-100 text-blue-700 px-4 py-2 rounded-full shadow-sm font-bold text-lg">
+                        <div className="mt-3 md:mt-0 bg-blue-100 text-blue-700 px-3 py-2 md:px-4 md:py-2 rounded-full shadow-sm font-bold text-base md:text-lg text-center">
                             {formatNumber(reserveWater)} m³
                         </div>
                     </div>
-                    <p className="mt-4 text-sm text-gray-600">
+                    <p className="mt-4 text-sm md:text-base text-gray-600">
                         Şu anda rezervde bulunan toplam su miktarı.
                     </p>
                 </div>
 
 
                 {/* Toplam Kazanç */}
-                <div className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-                    <div className="flex items-center justify-between">
-                        <h2 className="text-xl font-semibold text-gray-800 flex items-center">
-                            <FaCoins className="text-yellow-500 mr-3 text-3xl" />
+                <div className="bg-white shadow-md rounded-lg p-4 md:p-6 border border-gray-200">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+                        <h2 className="text-lg md:text-xl font-semibold text-gray-800 flex items-center">
+                            <FaCoins className="text-yellow-500 mr-3 text-2xl md:text-3xl" />
                             Toplam Kazanç
                         </h2>
-                        <div className="bg-yellow-100 text-yellow-700 px-4 py-2 rounded-full shadow-sm font-bold text-lg">
+                        <div className="mt-3 md:mt-0 bg-yellow-100 text-yellow-700 px-3 py-2 md:px-4 md:py-2 rounded-full shadow-sm font-bold text-base md:text-lg text-center">
                             {formatPrice(savingWaterTon * waterTonPrice)}
                         </div>
                     </div>
-                    <p className="mt-4 text-sm text-gray-600">
+                    <p className="mt-4 text-sm md:text-base text-gray-600">
                         Bu ay su tasarrufu sayesinde elde edilen toplam kazanç.
                     </p>
                 </div>
 
-
                 {/* Toplam İşletme Gideri */}
-                <div className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-                    <div className="flex items-center justify-between">
-                        <h2 className="text-xl font-semibold text-gray-800 flex items-center">
-                            <FaWrench className="text-red-500 mr-3 text-3xl" />
+                <div className="bg-white shadow-md rounded-lg p-4 md:p-6 border border-gray-200">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+                        <h2 className="text-lg md:text-xl font-semibold text-gray-800 flex items-center">
+                            <FaWrench className="text-red-500 mr-3 text-2xl md:text-3xl" />
                             Toplam İşletme Gideri
                         </h2>
-                        <div className="bg-red-100 text-red-700 px-4 py-2 rounded-full shadow-sm font-bold text-lg">
+                        <div className="mt-3 md:mt-0 bg-red-100 text-red-700 px-3 py-2 md:px-4 md:py-2 rounded-full shadow-sm font-bold text-base md:text-lg text-center">
                             {formatPrice((savingWaterTon * 0.25 * kwhPrice) + ((savingWaterTon / 100) * filterPrice))}
                         </div>
                     </div>
-                    <p className="mt-4 text-sm text-gray-600">
-                        Bu ayki toplam işletme giderleri, elektrik vXe filtre masraflarını içerir.
+                    <p className="mt-4 text-sm md:text-base text-gray-600">
+                        Bu ayki toplam işletme giderleri, elektrik ve filtre masraflarını içerir.
                     </p>
-                    <div className="mt-4 text-xs text-gray-400 space-y-1">
+                    <div className="mt-4 text-xs md:text-sm text-gray-400 space-y-1">
                         <div className="flex justify-between">
                             <span>Elektrik Maliyeti:</span>
                             <span>{formatPrice(savingWaterTon * 0.25 * kwhPrice)}</span>
@@ -252,14 +252,14 @@ const MainContent = () => {
                 </div>
 
                 {/* Toplam Kâr */}
-                <div className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-                    <div className="flex items-center justify-between">
-                        <h2 className="text-xl font-semibold text-gray-800 flex items-center">
-                            <FaCoins className="text-green-500 mr-3 text-3xl" />
+                <div className="bg-white shadow-md rounded-lg p-4 md:p-6 border border-gray-200">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+                        <h2 className="text-lg md:text-xl font-semibold text-gray-800 flex items-center">
+                            <FaCoins className="text-green-500 mr-3 text-2xl md:text-3xl" />
                             Toplam Kâr
                         </h2>
                         <div
-                            className={`px-4 py-2 rounded-full shadow-sm font-bold text-lg ${(savingWaterTon * waterTonPrice) - ((savingWaterTon * 0.25 * kwhPrice) + (savingWaterTon / 100) * filterPrice) >= 0
+                            className={`mt-3 md:mt-0 px-3 py-2 md:px-4 md:py-2 rounded-full shadow-sm font-bold text-base md:text-lg text-center ${(savingWaterTon * waterTonPrice) - ((savingWaterTon * 0.25 * kwhPrice) + (savingWaterTon / 100) * filterPrice) >= 0
                                 ? "bg-green-100 text-green-700"
                                 : "bg-red-100 text-red-700"
                                 }`}
@@ -269,11 +269,13 @@ const MainContent = () => {
                             )}
                         </div>
                     </div>
-                    <p className="mt-4 text-sm text-gray-600">
+                    <p className="mt-4 text-sm md:text-base text-gray-600">
                         Bu ayki su tasarrufu sayesinde elde edilen toplam kâr.
                     </p>
                 </div>
+
             </div>
+
         </main>
     );
 };

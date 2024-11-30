@@ -4,15 +4,13 @@ import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 const TechnicalSupport = () => {
     return (
         <div className="flex-1 p-6 overflow-y-auto">
-            {/* Sayfa Başlığı */}
             <h1 className="text-4xl font-extrabold text-gray-800 mb-8 text-center">
                 Teknik Destek
             </h1>
 
-            {/* İçerik */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 w-full max-w-7xl">
                 {/* İletişim Bilgileri */}
-                <div className="bg-white shadow-xl rounded-lg p-8 flex flex-col justify-between">
+                <div className="bg-white shadow-xl rounded-lg p-8 flex flex-col justify-between order-2 lg:order-1">
                     <h2 className="text-2xl font-bold text-gray-800 mb-6">İletişim Bilgileri</h2>
                     <ul className="space-y-6">
                         <li className="flex items-center">
@@ -36,7 +34,7 @@ const TechnicalSupport = () => {
                 </div>
 
                 {/* İletişim Formu */}
-                <div className="bg-white shadow-xl rounded-lg p-8">
+                <div className="bg-white shadow-xl rounded-lg p-8 order-1 lg:order-2">
                     <h2 className="text-2xl font-bold text-gray-800 mb-6">İletişim Formu</h2>
                     <form className="space-y-6">
                         <div>
