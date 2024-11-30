@@ -25,6 +25,8 @@ const CalculaterContent = () => {
   const [selectedWCL, setSelectedWCL] = useState('');
   const [cost, setCost] = useState(null);
   const [results, setResults] = useState({});
+  const [showResults, setShowResults] = useState(false);
+
   const generateOptions = (start, end) => {
     return Array.from({ length: end - start + 1 }, (_, i) => (
       <option key={i + start} value={i + start}>{i + start}</option>
@@ -38,6 +40,7 @@ const CalculaterContent = () => {
       setCost(null);
     }
   }, [selectedCity, selectedHomeType]);
+
   const calculateResults = () => {
     if (!cost || !selectedDays || !selectedWorkers || !selectedHours) return;
 
@@ -58,131 +61,206 @@ const CalculaterContent = () => {
       netProfit,
       paybackPeriod,
     });
+
+    setShowResults(true);
   };
+
   return (
-    <div className="flex flex-col md:flex-row w-full h-full justify-center items-center md:items-start gap-10 mx-auto mt-10">
-      <div className="bg-white p-6 rounded-lg shadow-3xl w-4/5 md:w-2/5">
-        <h1 className="text-xl font-semibold mb-4">Bilgileri Doldurun!</h1>
+    <div className="flex w-full h-full justify-center items-center gap-4 p-10">
+      <div
+        className={`bg-white p-8 rounded-lg shadow-lg transition-all duration-500 ease-in-out ${showResults ? 'w-1/3 translate-x-0' : 'w-full max-w-4xl'
+          }`}
+      >
+        <h1 className="text-2xl font-bold text-gray-800 mb-4">Tasarruf Hesaplama Aracı</h1>
+        <h2 className="text-lg font-medium text-gray-600 mb-6">Lütfen bilgileri eksiksiz doldurunuz.</h2>
 
-        <div className="mb-4">
-          <label htmlFor="city" className="block text-gray-700 font-bold mb-2">Şehir seçiniz</label>
-          <select
-            id="city"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            onChange={(e) => setSelectedCity(e.target.value)}
-          >
-            <option>Seçiniz</option>
-            {cities.map(city => (
-              <option key={city} value={city}>{city}</option>
-            ))}
-          </select>
+        <div className="space-y-6">
+          {/* Şehir Seçimi */}
+          <div>
+            <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-2">Şehir Seçiniz</label>
+            <select
+              id="city"
+              className="block w-full rounded-lg border-gray-300 bg-gray-100 text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm py-3 px-4"
+              onChange={(e) => setSelectedCity(e.target.value)}
+            >
+              <option value="">Seçiniz</option>
+              {cities.map(city => (
+                <option key={city} value={city}>{city}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Hane Türü */}
+          <div>
+            <label htmlFor="homeType" className="block text-sm font-medium text-gray-700 mb-2">Hane Türü Seçiniz</label>
+            <select
+              id="homeType"
+              className="block w-full rounded-lg border-gray-300 bg-gray-100 text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm py-3 px-4"
+              onChange={(e) => setSelectedHomeType(e.target.value)}
+            >
+              <option value="">Seçiniz</option>
+              <option value="Devlet Dairesi">Devlet Dairesi</option>
+              <option value="İşyeri">İşyeri</option>
+              <option value="OBS">OSB</option>
+            </select>
+          </div>
+
+          {/* Ayda Kaç Gün Açık */}
+          <div>
+            <label htmlFor="openDays" className="block text-sm font-medium text-gray-700 mb-2">Ayda Kaç Gün Açık?</label>
+            <select
+              id="openDays"
+              className="block w-full rounded-lg border-gray-300 bg-gray-100 text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm py-3 px-4"
+              onChange={(e) => setSelectedDays(e.target.value)}
+            >
+              <option value="">Seçiniz</option>
+              {generateOptions(20, 31)}
+            </select>
+          </div>
+
+          {/* Günde Kaç Saat */}
+          <div>
+            <label htmlFor="openHours" className="block text-sm font-medium text-gray-700 mb-2">Günde Kaç Saat?</label>
+            <select
+              id="openHours"
+              className="block w-full rounded-lg border-gray-300 bg-gray-100 text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm py-3 px-4"
+              onChange={(e) => setSelectedHours(e.target.value)}
+            >
+              <option value="">Seçiniz</option>
+              {generateOptions(0, 24)}
+            </select>
+          </div>
+
+          {/* Kaç Personel */}
+          <div>
+            <label htmlFor="personnel" className="block text-sm font-medium text-gray-700 mb-2">Kaç Personel?</label>
+            <input
+              type="number"
+              placeholder='Personel Sayısı'
+              id="personnel"
+              className="block w-full rounded-lg border-gray-300 bg-gray-100 text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm py-3 px-4"
+              onChange={(e) => setSelectedWorkers(e.target.value)}
+            />
+          </div>
+
+          {/* Kaç Adet Tuvalet */}
+          <div>
+            <label htmlFor="toilets" className="block text-sm font-medium text-gray-700 mb-2">Kaç Adet Tuvalet Mevcut?</label>
+            <select
+              id="toilets"
+              className="block w-full rounded-lg border-gray-300 bg-gray-100 text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm py-3 px-4"
+              onChange={(e) => setSelectedWC(e.target.value)}
+            >
+              <option value="">Seçiniz</option>
+              {generateOptions(1, 25)}
+            </select>
+          </div>
+
+          {/* Tuvaletteki Lavabolar Kaçlı */}
+          <div>
+            <label htmlFor="lavabos" className="block text-sm font-medium text-gray-700 mb-2">Tuvaletteki Lavabolar Kaçlı?</label>
+            <select
+              id="lavabos"
+              className="block w-full rounded-lg border-gray-300 bg-gray-100 text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm py-3 px-4"
+              onChange={(e) => setSelectedWCL(e.target.value)}
+            >
+              <option value="">Seçiniz</option>
+              {generateOptions(1, 20)}
+            </select>
+          </div>
         </div>
 
-        <div className="mb-4">
-          <label htmlFor="homeType" className="block text-gray-700 font-bold mb-2">Hane Türü seçiniz</label>
-          <select
-            id="homeType"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            onChange={(e) => setSelectedHomeType(e.target.value)}
-          >
-            <option>Seçiniz</option>
-            <option value="Devlet Dairesi">Devlet Dairesi</option>
-            <option value="İşyeri">İşyeri</option>
-            <option value="OBS">OBS</option>
-          </select>
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="openDays" className="block text-gray-700 font-bold mb-2">Ayda Kaç Gün Açık?</label>
-          <select id="openDays" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            onChange={(e) => setSelectedDays(e.target.value)}>
-            <option>Seçiniz</option>
-            {generateOptions(20, 31)}
-          </select>
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="openHours" className="block text-gray-700 font-bold mb-2">Günde Kaç Saat?</label>
-          <select id="openHours" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            onChange={(e) => setSelectedHours(e.target.value)}>
-            <option>Seçiniz</option>
-            {generateOptions(0, 24)}
-          </select>
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="personnel" className="block text-gray-700 font-bold mb-2">Kaç Personel?</label>
-          <input
-            type="number"
-            id="personnel"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            onChange={(e) => setSelectedWorkers(e.target.value)}
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="toilets" className="block text-gray-700 font-bold mb-2">Kaç Adet Tuvalet Mevcut?</label>
-          <select id="toilets" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            onChange={(e) => setSelectedWC(e.target.value)}>
-            <option>Seçiniz</option>
-            {generateOptions(1, 25)}
-          </select>
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="lavabos" className="block text-gray-700 font-bold mb-2">Tuvaletteki Lavabolar Kaçlı?</label>
-          <select id="lavabos" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            onChange={(e) => setSelectedWCL(e.target.value)}>
-            <option>Seçiniz</option>
-            {generateOptions(1, 20)}
-          </select>
-        </div>
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          onClick={calculateResults} >
-          Hesapla!
+        <button
+          className="mt-6 w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+          onClick={calculateResults}
+        >
+          Hesapla
         </button>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-3xl w-4/5 md:w-2/5 text-center">
-        <h1 className='font-bold text-4xl mb-6'>KAZANCINIZ!</h1>
+      {showResults && (
+        <div
+          className={`bg-white p-8 rounded-lg shadow-lg transition-all duration-500 ease-in-out w-1/3`}
+        >
+          <h1 className="font-bold text-2xl text-blue-600 mb-6">🎉 KAZANCINIZ!</h1>
+          <div className="space-y-6">
+            <div className="flex items-center gap-4">
+              <span className="text-blue-500 text-3xl">💰</span>
+              <div>
+                <h2 className="font-semibold text-lg text-gray-800">Kurulum Maliyeti</h2>
+                <p className="text-gray-600 text-base">{results.setupCost.toFixed(2)} ₺</p>
+              </div>
+            </div>
 
-        <h1 className='font-bold text-xl mb-2'>Kurulum Maliyeti</h1>
-        <h1 className='font-bold text-sm mb-4'>{results.setupCost} TL</h1>
+            <div className="flex items-center gap-4">
+              <span className="text-green-500 text-3xl">🌿</span>
+              <div>
+                <h2 className="font-semibold text-lg text-gray-800">Tasarruf Miktarı</h2>
+                <p className="text-gray-600 text-base">
+                  Aylık: {results.savingsAmount.toFixed(2)} Litre <br />
+                  Yıllık: {(results.savingsAmount * 12).toFixed(2)} Litre
+                </p>
+              </div>
+            </div>
 
-        <h1 className='font-bold text-xl mb-2'>Tasarruf Miktarı</h1>
-        <h1 className='font-bold text-sm mb-4'>
-          Aylık: {results.savingsAmount} Litre
-          <br />
-          Yılık: {results.savingsAmount * 12} Litre
-        </h1>
+            <div className="flex items-center gap-4">
+              <span className="text-yellow-500 text-3xl">📈</span>
+              <div>
+                <h2 className="font-semibold text-lg text-gray-800">Tasarruf Tutarı</h2>
+                <p className="text-gray-600 text-base">
+                  Aylık: {results.savingsValue.toFixed(2)} ₺ <br />
+                  Yıllık: {(results.savingsValue * 12).toFixed(2)} ₺
+                </p>
+              </div>
+            </div>
 
-        <h1 className='font-bold text-xl mb-2'>Tasarruf Tutarı</h1>
-        <h1 className='font-bold text-sm mb-4'>
-          Aylık: {results.savingsValue} TL
-          <br />
-          Yılık: {results.savingsValue * 12} TL
-        </h1>
+            <div className="flex items-center gap-4">
+              <span className="text-red-500 text-3xl">🛠️</span>
+              <div>
+                <h2 className="font-semibold text-lg text-gray-800">Filtre Maliyeti</h2>
+                <p className="text-gray-600 text-base">
+                  Aylık: {results.filterCost.toFixed(2)} ₺ <br />
+                  Yıllık: {(results.filterCost * 12).toFixed(2)} ₺
+                </p>
+              </div>
+            </div>
 
-        <h1 className='font-bold text-xl mb-2'>Filtre Maliyeti</h1>
-        <h1 className='font-bold text-sm mb-4'>
-          Aylık: {results.filterCost} TL
-          <br />
-          Yılık: {results.filterCost*12} TL
-        </h1>
+            <div className="flex items-center gap-4">
+              <span className="text-indigo-500 text-3xl">⚡</span>
+              <div>
+                <h2 className="font-semibold text-lg text-gray-800">Elektrik Maliyeti</h2>
+                <p className="text-gray-600 text-base">
+                  Aylık: {results.electricityCost.toFixed(2)} ₺ <br />
+                  Yıllık: {(results.electricityCost * 12).toFixed(2)} ₺
+                </p>
+              </div>
+            </div>
 
-        <h1 className='font-bold text-xl mb-2'>Elektrik Maliyeti</h1>
-        <h1 className='font-bold text-sm mb-4'>
-          Aylık: {results.electricityCost} TL
-          <br />
-          Yılık: {results.electricityCost*12} TL
-        </h1>
+            <div className="flex items-center gap-4">
+              <span className="text-green-600 text-3xl">🤑</span>
+              <div>
+                <h2 className="font-semibold text-lg text-gray-800">Net Kazanç Tutarı</h2>
+                <p className="text-gray-600 text-base">
+                  Aylık: {results.netProfit.toFixed(2)} ₺ <br />
+                  Yıllık: {(results.netProfit * 12).toFixed(2)} ₺
+                </p>
+              </div>
+            </div>
 
-        <h1 className='font-bold text-xl mb-2'>Net Kazanç Tutarı</h1>
-        <h1 className='font-bold text-sm mb-4'>Aylık: {results.netProfit} TL <br /> Yılık: {results.netProfit*12} TL  </h1>
+            <div className="flex items-center gap-4">
+              <span className="text-purple-500 text-3xl">⏳</span>
+              <div>
+                <h2 className="font-semibold text-lg text-gray-800">Amorti Süresi</h2>
+                <p className="text-gray-600 text-base">
+                  {results.paybackPeriod} Ay <br />
+                  {(results.paybackPeriod / 12).toFixed(2)} Yıl
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
-        <h1 className='font-bold text-xl mb-2'>Amorti Süresi</h1>
-        <h1 className='font-bold text-sm'>{results.paybackPeriod} Ay <br /> {results.paybackPeriod/12} yıl </h1>
-      </div>
     </div>
   );
 };
