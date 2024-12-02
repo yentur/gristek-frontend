@@ -141,7 +141,7 @@ const MainContent = () => {
             {/* Çubuk Grafik */}
             <div className="bg-white shadow-md rounded-lg p-4 sm:p-6 mb-4 sm:mb-6 w-full h-64 sm:h-80 md:h-[400px] lg:h-[500px]">
                 <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2 sm:mb-4">Tasarruf Miktarı</h2>
-                <div className="w-full h-full">
+                <div className="w-full h-full p-6">
                     <Bar data={data} options={options} />
                 </div>
             </div>

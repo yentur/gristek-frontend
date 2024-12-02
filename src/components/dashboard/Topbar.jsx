@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import { FiMenu } from "react-icons/fi"; // Hamburger Menü İkonu
+import user_logo from "../../dist/images/user.png"
 
 const Topbar = ({ organizationName, toggleSidebar }) => {
     const [userName, setUserName] = useState("Kullanıcı Adı");
     const [userRole, setUserRole] = useState("Yönetici");
-    const [userAvatar, setUserAvatar] = useState("https://via.placeholder.com/40");
+    const [userAvatar, setUserAvatar] = useState(user_logo);
 
     return (
         <header className="bg-white shadow-md h-16 flex items-center px-4 md:px-8 text-gray-800">

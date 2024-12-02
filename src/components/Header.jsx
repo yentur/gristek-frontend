@@ -55,16 +55,9 @@ const Header = () => {
 
         {/* Desktop Button */}
         <div className="hidden md:flex items-center space-x-4">
-          <a href="/bireysel-giris" className="bg-pc-200 hover:bg-pc-100 text-white font-medium py-1 px-4 rounded-md">
-            Bireysel Giriş
-          </a>
-          <div className="w-px h-6 bg-gray-300"></div>
-          <a href="/bayi-giris" className="bg-pc-200 hover:bg-pc-100 text-white font-medium py-1 px-4 rounded-md">
-            Bayi Girişi
-          </a>
-          <div className="w-px h-6 bg-gray-300"></div>
-          <a href="/kurumsal-giris" className="bg-pc-200 hover:bg-pc-100 text-white font-medium py-1 px-4 rounded-md">
-            Kurumsal Giriş
+          <div className="w-px h-8 bg-gray-300"></div>
+          <a href="/kurumsal-giris" className="bg-pc-200 hover:bg-pc-100 text-xl text-white font-bold py-2 px-6 rounded-md">
+            Giriş
           </a>
         </div>
 
@@ -107,16 +100,9 @@ const Header = () => {
         <a href="/iletisim/" className="text-black hover:text-pc font-medium block">
           İletişim
         </a>
-        <a href="/bireysel-giris" className="bg-pc-200 hover:bg-pc-100 text-white font-medium py-2 px-4 rounded-md block">
-          Bireysel Giriş
-        </a>
         <div className="h-px w-full bg-gray-300"></div> {/* Yatay separator */}
-        <a href="/bayi-giris" className="bg-pc-200 hover:bg-pc-100 text-white font-medium py-2 px-4 rounded-md block">
-          Bayi Girişi
-        </a>
-        <div className="h-px w-full bg-gray-300"></div> {/* Yatay separator */}
-        <a href="/kurumsal-giris" className="bg-pc-200 hover:bg-pc-100 text-white font-medium py-2 px-4 rounded-md block">
-          Kurumsal Giriş
+        <a href="/kurumsal-giris" className="bg-pc-200 hover:bg-pc-100 text-white font-medium py-2 px-4 rounded-md block text-center">
+          Giriş
         </a>
 
       </div>

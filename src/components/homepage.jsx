@@ -14,12 +14,11 @@ const Homepage = () => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    // sessionStorage'da "isModalShown" kontrol edilir
     const isModalShown = sessionStorage.getItem("isModalShown");
 
     if (!isModalShown) {
-      setShowModal(true); // Modal açılır
-      sessionStorage.setItem("isModalShown", "true"); // Oturum boyunca kaydedilir
+      setShowModal(true); 
+      sessionStorage.setItem("isModalShown", "true"); 
     }
   }, []);
 
@@ -39,7 +38,6 @@ const Homepage = () => {
         <FiltrationSystem />
         <UsageAreas />
         <Footer />
-        {/* Modal sadece showModal true ise gösterilir */}
         {showModal && <Modal onClose={closeModal} />}
       </div>
     </div>

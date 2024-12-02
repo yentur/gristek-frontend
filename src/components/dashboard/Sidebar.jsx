@@ -24,8 +24,8 @@ const Sidebar = ({ activePage, setActivePage, hasIssue, handleReport, isReported
 
             {/* Sidebar */}
             <aside
-                className={`fixed z-20 inset-y-0 left-0 transform ${isOpen ? "translate-x-0" : "-translate-x-full"
-                    } md:translate-x-0 md:relative w-72 bg-white shadow-lg transition-transform duration-300 ease-in-out`}
+                className={`fixed h-screen z-20 inset-y-0 left-0 transform ${isOpen ? "translate-x-0" : "-translate-x-full"
+                    } md:translate-x-0 md:relative w-72 bg-white shadow-lg transition-transform duration-300 ease-in-out overflow-hidden`}
             >
                 {/* Logo */}
                 <div className="p-6 border-b border-gray-200">
@@ -37,7 +37,7 @@ const Sidebar = ({ activePage, setActivePage, hasIssue, handleReport, isReported
                 </div>
 
                 {/* Navigation */}
-                <nav className="flex-1 p-4 space-y-2">
+                <nav className="h-screen flex-1 p-4 space-y-2">
                     {/* Anasayfa */}
                     <a
                         href="#"
@@ -92,10 +92,8 @@ const Sidebar = ({ activePage, setActivePage, hasIssue, handleReport, isReported
                         <FiHeadphones className="mr-3 text-lg" />
                         Teknik Destek
                     </a>
-                </nav>
-
-                {/* Logout */}
-                <div className="p-4 border-t border-gray-200">
+                     {/* Logout */}
+                <div className="p-4 border-t border-gray-200 mt-auto">
                     <a
                         href="#"
                         className="flex items-center text-gray-700 hover:text-red-500 hover:bg-gray-100 px-4 py-3 rounded-lg transition-all duration-200"
@@ -104,6 +102,7 @@ const Sidebar = ({ activePage, setActivePage, hasIssue, handleReport, isReported
                         Çıkış Yap
                     </a>
                 </div>
+                </nav>
             </aside>
 
             {/* Mobile */}
