@@ -1,18 +1,36 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 const CorporateLogin = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
 
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setError("");
 
-        console.log("Email:", email, "Password:", password);
+        try {
+            const formData = new FormData();
+            formData.append('username', email);
+            formData.append('password', password);
 
-        navigate("/kurumsal");
+            const response = await axios.post('http://localhost:8000/login', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+
+            localStorage.setItem('token', response.data.access_token);
+
+            navigate("/kurumsal");
+        } catch (err) {
+            setError("Giriş başarısız. Lütfen e-posta ve şifrenizi kontrol edin.");
+            console.error("Login error:", err);
+        }
     };
 
     return (
@@ -21,6 +39,11 @@ const CorporateLogin = () => {
                 <h2 className="text-3xl font-bold text-center text-gray-900 mb-6">
                     Gristek Giriş
                 </h2>
+                {error && (
+                    <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
+                        {error}
+                    </div>
+                )}
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                         <label

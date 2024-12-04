@@ -1,3 +1,4 @@
+import React from 'react';
 import './main.css';
 import Homepage from './components/homepage';
 import ContactPage from './components/ContactPage';
@@ -11,12 +12,13 @@ import DealerLogin from './components/auth/DealerLogin';
 import CorporateLogin from './components/auth/CorporateLogin';
 import Corporate from './components/dashboard/Corporate';
 import TechnicalSupport from './components/dashboard/TechnicalSupport';
+import PrivateRoute from './PrivateRoute'; 
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <header className="App-header ">
+        <header className="App-header">
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/iletisim" element={<ContactPage />} />
@@ -27,7 +29,16 @@ function App() {
             <Route path="/bireysel-giris" element={<IndividualLogin />} />
             <Route path="/bayi-giris" element={<DealerLogin />} />
             <Route path="/kurumsal-giris" element={<CorporateLogin />} />
-            <Route path="/kurumsal" element={<Corporate />} />
+            
+            <Route 
+              path="/kurumsal" 
+              element={
+                <PrivateRoute>
+                  <Corporate />
+                </PrivateRoute>
+              } 
+            />
+            
             <Route path="/teknik-destek" element={<TechnicalSupport />} />
           </Routes>
         </header>

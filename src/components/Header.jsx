@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import logo from "../dist/images/logo2.png"
 const Header = () => {
   const [scrollDirection, setScrollDirection] = useState('up');
-  const [menuOpen, setMenuOpen] = useState(false);  // Menü açılma durumunu takip etmek için state
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     let prevScrollY = window.pageYOffset;
@@ -15,6 +16,10 @@ const Header = () => {
     };
 
     window.addEventListener('scroll', handleScroll);
+
+    // Check login status on component mount
+    const token = localStorage.getItem('token');
+    setIsLoggedIn(!!token);
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -56,12 +61,24 @@ const Header = () => {
         {/* Desktop Button */}
         <div className="hidden md:flex items-center space-x-4">
           <div className="w-px h-8 bg-gray-300"></div>
-          <a href="/kurumsal-giris" className="bg-pc-200 hover:bg-pc-100 text-xl text-white font-bold py-2 px-6 rounded-md">
-            Giriş
-          </a>
+          {isLoggedIn ? (
+            <a 
+              href="/kurumsal" 
+              className="bg-pc-200 hover:bg-pc-100 text-xl text-white font-bold py-2 px-6 rounded-md"
+            >
+              Dashboard
+            </a>
+          ) : (
+            <a 
+              href="/kurumsal-giris" 
+              className="bg-pc-200 hover:bg-pc-100 text-xl text-white font-bold py-2 px-6 rounded-md"
+            >
+              Giriş
+            </a>
+          )}
         </div>
 
-
+        {/* Mobile Menu Toggle */}
         <button
           className="absolute left-5 md:hidden marker:md:hidden text-black focus:outline-none"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -100,11 +117,22 @@ const Header = () => {
         <a href="/iletisim/" className="text-black hover:text-pc font-medium block">
           İletişim
         </a>
-        <div className="h-px w-full bg-gray-300"></div> {/* Yatay separator */}
-        <a href="/kurumsal-giris" className="bg-pc-200 hover:bg-pc-100 text-white font-medium py-2 px-4 rounded-md block text-center">
-          Giriş
-        </a>
-
+        <div className="h-px w-full bg-gray-300"></div>
+        {isLoggedIn ? (
+          <a 
+            href="/kurumsal" 
+            className="bg-pc-200 hover:bg-pc-100 text-white font-medium py-2 px-4 rounded-md block text-center"
+          >
+            Dashboard
+          </a>
+        ) : (
+          <a 
+            href="/kurumsal-giris" 
+            className="bg-pc-200 hover:bg-pc-100 text-white font-medium py-2 px-4 rounded-md block text-center"
+          >
+            Giriş
+          </a>
+        )}
       </div>
     </header>
   );

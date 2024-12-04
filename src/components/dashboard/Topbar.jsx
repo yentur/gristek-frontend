@@ -9,14 +9,11 @@ const Topbar = ({ organizationName, toggleSidebar }) => {
 
     return (
         <header className="bg-white shadow-md h-16 flex items-center px-4 md:px-8 text-gray-800">
-            {/* Organizasyon Adı */}
             <h1 className="text-lg md:text-2xl font-semibold flex-1 text-center md:text-left">
                 {organizationName}
             </h1>
 
-            {/* Sağ Taraf (Arama ve Kullanıcı Bilgisi) */}
             <div className="flex items-center space-x-4 md:space-x-6">
-                {/* Arama Kutusu (Sadece büyük ekranlarda görünür) */}
                 <div className="hidden md:block relative">
                     <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
                         <FaSearch />

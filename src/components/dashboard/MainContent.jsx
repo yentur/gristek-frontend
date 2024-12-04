@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Bar } from "react-chartjs-2";
+import axios from "axios";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -10,83 +11,87 @@ import {
     Legend,
 } from "chart.js";
 import DashboardModal from "./DashboardModal";
-import gristek_kutu from "../../dist/images/gristek-kutu1.png"
 import { FaTint, FaBox, FaCoins, FaWrench } from "react-icons/fa";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
+const BASE_URL = "http://localhost:8000/api";  // Update with your backend URL
+
+// Utility functions
+const formatNumber = (num) => num.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const formatPrice = (num) => num.toLocaleString('tr-TR', { style: 'currency', currency: 'TRY', minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
 const MainContent = () => {
     const [timeRange, setTimeRange] = useState("gün");
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [savingWaterTon, setSavingWaterTon] = useState(10000);
-    const [waterTonPrice, setWaterTonPrice] = useState(14.03);
-    const [kwhPrice, setKwhPrice] = useState(2.22);
-    const [filterPrice, setFilterPrice] = useState(1000);
-    const [reserveWater, setReserveWater] = useState(5000);
 
-    const formatPrice = (price) => {
-        return new Intl.NumberFormat("tr-TR", {
-            style: "currency",
-            currency: "TRY",
-        }).format(price);
-    };
+    // State for metrics
+    const [savingsData, setSavingsData] = useState({
+        totalSavings: 0,
+        dailySavings: 0
+    });
+    const [deviceSummary, setDeviceSummary] = useState({
+        totalDevices: 0,
+        activeDevices: 0,
+        reserveWater: 0
+    });
+    const [costAnalysis, setCostAnalysis] = useState({
+        totalRevenue: 0,
+        electricityCost: 0,
+        filterCost: 0,
+        totalOperatingCost: 0,
+        totalProfit: 0
+    });
+    const [monthlyData, setMonthlyData] = useState([]);
+    const [hourlyData, setHourlyData] = useState([]);
 
-    const formatNumber = (number) => {
-        return new Intl.NumberFormat("tr-TR").format(number);
-    };
+    // Constants for calculations
+    const waterTonPrice = 14.03;
+    const kwhPrice = 2.22;
+    const filterPrice = 1000;
 
-    const devices = [
-        { id: 1, name: "Cihaz 1", status: "Aktif", saving: "15 m³", details: "Cihaz 1 açıklaması.", location: "Kat 1 - Erkek Lavabosu", image: gristek_kutu },
-        { id: 2, name: "Cihaz 2", status: "Beklemede", saving: "8 m³", details: "Cihaz 2 açıklaması.", location: "Kat 1 - Erkek Lavabosu", image: gristek_kutu },
-        { id: 3, name: "Cihaz 3", status: "Arızalı", saving: "0 m³", details: "Cihaz 3 açıklaması.", location: "Kat 2 - Kadın Lavabosu", image: gristek_kutu },
-        { id: 4, name: "Cihaz 4", status: "Aktif", saving: "20 m³", details: "Cihaz 4 açıklaması.", location: "Kat 2 - Kadın Lavabosu", image: gristek_kutu },
-        { id: 5, name: "Cihaz 5", status: "Aktif", saving: "12 m³", details: "Cihaz 5 açıklaması.", location: "Kat 3 - Ortak Lavabo", image: gristek_kutu },
-        { id: 6, name: "Cihaz 6", status: "Beklemede", saving: "7 m³", details: "Cihaz 6 açıklaması.", location: "Kat 3 - Ortak Lavabo", image: gristek_kutu },
-        { id: 7, name: "Cihaz 7", status: "Aktif", saving: "18 m³", details: "Cihaz 7 açıklaması.", location: "Zemin Kat - Engelli Tuvaleti", image: gristek_kutu },
-        { id: 8, name: "Cihaz 8", status: "Arızalı", saving: "0 m³", details: "Cihaz 8 açıklaması.", location: "Zemin Kat - Engelli Tuvaleti", image: gristek_kutu },
-        { id: 9, name: "Cihaz 9", status: "Beklemede", saving: "10 m³", details: "Cihaz 9 açıklaması.", location: "Kat 1 - Erkek Lavabosu", image: gristek_kutu },
-        { id: 10, name: "Cihaz 10", status: "Aktif", saving: "22 m³", details: "Cihaz 10 açıklaması.", location: "Kat 2 - Kadın Lavabosu", image: gristek_kutu },
-    ];
+    // Fetch data function
+    const fetchAllData = async () => {
+        try {
+            const [
+                savingsResponse,
+                deviceSummaryResponse, 
+                costAnalysisResponse,
+                monthlyResponse,
+                hourlyResponse
+            ] = await Promise.all([
+                axios.get(`${BASE_URL}/tasarruf`),
+                axios.get(`${BASE_URL}/device-summary`),
+                axios.get(`${BASE_URL}/cost-analysis`),
+                axios.get(`${BASE_URL}/aylik-tasarruf`),
+                axios.get(`${BASE_URL}/hourly-savings`)
+            ]);
 
-    const groupedDevices = devices.reduce((acc, device) => {
-        if (!acc[device.location]) {
-            acc[device.location] = [];
+            setSavingsData(savingsResponse.data);
+            setDeviceSummary(deviceSummaryResponse.data.data);
+            setCostAnalysis(costAnalysisResponse.data.data);
+            setMonthlyData(monthlyResponse.data.data);
+            setHourlyData(hourlyResponse.data.data.hourly_savings);
+        } catch (error) {
+            console.error("Error fetching dashboard data:", error);
         }
-        acc[device.location].push(device);
-        return acc;
-    }, {});
-
-    const generateHourlyLabels = () => {
-        const labels = [];
-        for (let hour = 0; hour < 24; hour++) {
-            labels.push(`${hour.toString().padStart(2, '0')}:00`);
-        }
-        return labels;
     };
 
+    useEffect(() => {
+        fetchAllData();
+        const interval = setInterval(fetchAllData,  1000);  // Refresh every 5 minutes
+        return () => clearInterval(interval);  // Clean up on unmount
+    }, []);
+
+    // Generate yearly labels function
     const generateYearlyLabels = () => {
         const currentYear = new Date().getFullYear();
-        return Array.from({ length: 5 }, (_, i) => `${currentYear - i}`).reverse();
-    };
-
-    const generateData = () => {
-        switch (timeRange) {
-            case "gün":
-                return Array.from({ length: 24 }, () => Math.floor(Math.random() * 100));
-            case "hafta":
-                return Array.from({ length: 7 }, () => Math.floor(Math.random() * 100));
-            case "ay":
-                return Array.from({ length: 12 }, () => Math.floor(Math.random() * 100));
-            case "yıl":
-                return Array.from({ length: 5 }, () => Math.floor(Math.random() * 100));
-            default:
-                return [];
-        }
+        return Array.from({ length: 12 }, (_, i) => `${currentYear}-${i + 1}`);
     };
 
     const data = {
         labels: timeRange === "gün"
-            ? generateHourlyLabels()
+            ? generateHourlyLabels(hourlyData)
             : timeRange === "hafta"
                 ? ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"]
                 : timeRange === "ay"
@@ -95,7 +100,7 @@ const MainContent = () => {
         datasets: [
             {
                 label: "Su Tasarrufu (m³)",
-                data: generateData(),
+                data: processDataForTimeRange(timeRange, hourlyData, monthlyData),
                 backgroundColor: "#3b82f6",
                 borderColor: "#2563eb",
                 borderWidth: 1,
@@ -120,6 +125,15 @@ const MainContent = () => {
     };
 
     const timeRanges = ["gün", "hafta", "ay", "yıl"];
+
+    const devices = deviceSummary.totalDevices || 0;
+    const groupedDevices = [
+        { type: "Cihaz Tipi 1", count: Math.floor(devices / 2) },
+        { type: "Cihaz Tipi 2", count: Math.ceil(devices / 2) }
+    ];
+
+    const savingWaterTon = savingsData.totalSavings || 0;
+    const reserveWater = deviceSummary.reserveWater || 0;
 
     return (
         <main className="flex-1 p-6 overflow-y-auto">
@@ -156,7 +170,7 @@ const MainContent = () => {
                             Toplam Kurumdaki Cihaz Sayısı
                         </h2>
                     </div>
-                    <p className="text-2xl md:text-3xl font-bold text-gray-800">{devices.length}</p>
+                    <p className="text-2xl md:text-3xl font-bold text-gray-800">{devices}</p>
                     <p className="mt-2 text-sm md:text-base text-gray-600">
                         Kurumda aktif toplam cihaz sayısı. Daha fazla detay için aşağıya tıklayın.
                     </p>
@@ -207,7 +221,6 @@ const MainContent = () => {
                         Şu anda rezervde bulunan toplam su miktarı.
                     </p>
                 </div>
-
 
                 {/* Toplam Kazanç */}
                 <div className="bg-white shadow-md rounded-lg p-4 md:p-6 border border-gray-200">
@@ -273,11 +286,29 @@ const MainContent = () => {
                         Bu ayki su tasarrufu sayesinde elde edilen toplam kâr.
                     </p>
                 </div>
-
             </div>
-
         </main>
     );
 };
+
+// Utility functions
+function generateHourlyLabels(hourlyData) {
+    return hourlyData?.map(item => item.hour) || [];
+}
+
+function processDataForTimeRange(timeRange, hourlyData, monthlyData) {
+    switch(timeRange) {
+        case 'gün': 
+            return hourlyData?.map(item => item.savings) || [];
+        case 'hafta':
+            return [];
+        case 'ay':
+            return monthlyData?.map(item => item.value) || [];
+        case 'yıl':
+            return [];
+        default:
+            return [];
+    }
+}
 
 export default MainContent;
