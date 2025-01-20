@@ -16,7 +16,7 @@ const ContactInfoSection = () => {
                 Merkez ÇORUM
                 <br />
                 <br />
-                <strong>Telefon:</strong> 0506 774 78 35
+                <a href='https://wa.me/905067747835' className='text-blue-500'>Whatsapp:</a> 0506 774 78 35
                 <br />
                 <br />
                 <strong>E-Posta:</strong> info@gristek.com

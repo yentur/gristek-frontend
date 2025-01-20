@@ -1,14 +1,14 @@
 import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import AboutUsContent from "./AboutUsContent";
+import CalculaterContent from "./CalculatorContent";
 
-const AboutUs = () => {
+const Calculater = () => {
   return (
     <div className="w-full h-full">
-      <AboutUsContent />
+      <CalculaterContent />
     </div>
   );
 };
 
-export default AboutUs;
+export default Calculater;

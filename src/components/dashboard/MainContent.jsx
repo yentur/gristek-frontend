@@ -14,8 +14,7 @@ import DashboardModal from "./DashboardModal";
 import { FaTint, FaBox, FaCoins, FaWrench } from "react-icons/fa";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-
-const BASE_URL = "http://localhost:8000/api";  // Update with your backend URL
+const BASE_URL = process.env.REACT_APP_API_URL;  // Update with your backend URL
 
 // Utility functions
 const formatNumber = (num) => num.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -47,8 +46,8 @@ const MainContent = () => {
 
     // Constants for calculations
     const waterTonPrice = 14.03;
-    const kwhPrice = 2.22;
-    const filterPrice = 1000;
+    const kwhPrice = 4.7792;
+    const filterPrice = 500;
 
     // Fetch data function
     const fetchAllData = async () => {
@@ -79,7 +78,7 @@ const MainContent = () => {
 
     useEffect(() => {
         fetchAllData();
-        const interval = setInterval(fetchAllData,  1000);  // Refresh every 5 minutes
+        const interval = setInterval(fetchAllData,  300000);  // Refresh every 5 minutes
         return () => clearInterval(interval);  // Clean up on unmount
     }, []);
 
@@ -255,7 +254,7 @@ const MainContent = () => {
                     <div className="mt-4 text-xs md:text-sm text-gray-400 space-y-1">
                         <div className="flex justify-between">
                             <span>Elektrik Maliyeti:</span>
-                            <span>{formatPrice(savingWaterTon * 0.25 * kwhPrice)}</span>
+                            <span>{formatPrice(savingWaterTon * 0.225 * kwhPrice)}</span>
                         </div>
                         <div className="flex justify-between">
                             <span>Filtre Maliyeti:</span>

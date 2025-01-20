@@ -1,35 +1,109 @@
-import React, { useState, useEffect } from 'react';
-import cityData from '../data/city_data.json';
-import calcultedData from '../data/calculater_data.json';
+import React, { useState, useEffect } from "react";
+import cityData from "../data/city_data.json";
+import calcultedData from "../data/calculater_data.json";
+import { FaLeaf, FaChartLine, FaTools, FaBolt, FaMoneyBillWave } from "react-icons/fa";
 
 const CalculaterContent = () => {
   const cities = [
-    "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin",
-    "Aydın", "Balıkesir", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale",
-    "Çankırı", "Çorum", "Denizli", "Diyarbakır", "Edirne", "Elazığ", "Erzincan", "Erzurum",
-    "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkari", "Hatay", "Isparta", "Mersin",
-    "İstanbul", "İzmir", "Kars", "Kastamonu", "Kayseri", "Kırklareli", "Kırşehir", "Kocaeli",
-    "Konya", "Kütahya", "Malatya", "Manisa", "Kahramanmaraş", "Mardin", "Muğla", "Muş",
-    "Nevşehir", "Niğde", "Ordu", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas",
-    "Tekirdağ", "Tokat", "Trabzon", "Tunceli", "Şanlıurfa", "Uşak", "Van", "Yozgat", "Zonguldak",
-    "Aksaray", "Bayburt", "Karaman", "Kırıkkale", "Batman", "Şırnak", "Bartın", "Ardahan",
-    "Iğdır", "Yalova", "Karabük", "Kilis", "Osmaniye", "Düzce"
+    "Adana",
+    "Adıyaman",
+    "Afyonkarahisar",
+    "Ağrı",
+    "Amasya",
+    "Ankara",
+    "Antalya",
+    "Artvin",
+    "Aydın",
+    "Balıkesir",
+    "Bilecik",
+    "Bingöl",
+    "Bitlis",
+    "Bolu",
+    "Burdur",
+    "Bursa",
+    "Çanakkale",
+    "Çankırı",
+    "Çorum",
+    "Denizli",
+    "Diyarbakır",
+    "Edirne",
+    "Elazığ",
+    "Erzincan",
+    "Erzurum",
+    "Eskişehir",
+    "Gaziantep",
+    "Giresun",
+    "Gümüşhane",
+    "Hakkari",
+    "Hatay",
+    "Isparta",
+    "Mersin",
+    "İstanbul",
+    "İzmir",
+    "Kars",
+    "Kastamonu",
+    "Kayseri",
+    "Kırklareli",
+    "Kırşehir",
+    "Kocaeli",
+    "Konya",
+    "Kütahya",
+    "Malatya",
+    "Manisa",
+    "Kahramanmaraş",
+    "Mardin",
+    "Muğla",
+    "Muş",
+    "Nevşehir",
+    "Niğde",
+    "Ordu",
+    "Rize",
+    "Sakarya",
+    "Samsun",
+    "Siirt",
+    "Sinop",
+    "Sivas",
+    "Tekirdağ",
+    "Tokat",
+    "Trabzon",
+    "Tunceli",
+    "Şanlıurfa",
+    "Uşak",
+    "Van",
+    "Yozgat",
+    "Zonguldak",
+    "Aksaray",
+    "Bayburt",
+    "Karaman",
+    "Kırıkkale",
+    "Batman",
+    "Şırnak",
+    "Bartın",
+    "Ardahan",
+    "Iğdır",
+    "Yalova",
+    "Karabük",
+    "Kilis",
+    "Osmaniye",
+    "Düzce",
   ];
 
-  const [selectedCity, setSelectedCity] = useState('');
-  const [selectedHomeType, setSelectedHomeType] = useState('');
-  const [selectedHours, setSelectedHours] = useState('');
-  const [selectedDays, setSelectedDays] = useState('');
-  const [selectedWorkers, setSelectedWorkers] = useState('');
-  const [selectedWC, setSelectedWC] = useState('');
-  const [selectedWCL, setSelectedWCL] = useState('');
+  const [selectedCity, setSelectedCity] = useState("");
+  const [selectedHomeType, setSelectedHomeType] = useState("");
+  const [selectedHours, setSelectedHours] = useState("");
+  const [selectedDays, setSelectedDays] = useState("");
+  const [selectedWorkers, setSelectedWorkers] = useState("");
+  const [selectedWC, setSelectedWC] = useState("");
+  const [selectedWCL, setSelectedWCL] = useState("");
   const [cost, setCost] = useState(null);
   const [results, setResults] = useState({});
   const [showResults, setShowResults] = useState(false);
 
   const generateOptions = (start, end) => {
     return Array.from({ length: end - start + 1 }, (_, i) => (
-      <option key={i + start} value={i + start}>{i + start}</option>
+      <option key={i + start} value={i + start}>
+        {i + start}
+      </option>
     ));
   };
 
@@ -44,22 +118,19 @@ const CalculaterContent = () => {
   const calculateResults = () => {
     if (!cost || !selectedDays || !selectedWorkers || !selectedHours) return;
 
-    const setupCost = calcultedData['modul'] * selectedWC + calcultedData['modul_ek'] * selectedWCL;
     const savingsAmount = selectedDays * selectedWorkers * selectedHours * 4;
-    const savingsValue = (cost * selectedDays * selectedWorkers * selectedHours * 4) / 1000;
-    const filterCost = calcultedData['filter'] * selectedWCL;
-    const electricityCost = calcultedData['electric'] * selectedWCL;
+    const savingsValue =
+      (cost * selectedDays * selectedWorkers * selectedHours * 4) / 1000;
+    const filterCost = calcultedData["filter"] * selectedWCL;
+    const electricityCost = calcultedData["electric"] * selectedWCL;
     const netProfit = savingsValue - (electricityCost + filterCost);
-    const paybackPeriod = netProfit > 0 ? Math.ceil(setupCost / netProfit) : 0;
 
     setResults({
-      setupCost,
       savingsAmount,
       savingsValue,
       filterCost,
       electricityCost,
       netProfit,
-      paybackPeriod,
     });
 
     setShowResults(true);
@@ -71,28 +142,44 @@ const CalculaterContent = () => {
       <div
         className={`bg-white p-6 rounded-lg shadow-lg transition-all duration-500 ease-in-out w-full lg:w-2/3`}
       >
-        <h1 className="text-xl lg:text-2xl font-bold text-gray-800 mb-4 text-center lg:text-left">Tasarruf Hesaplama Aracı</h1>
-        <h2 className="text-sm lg:text-lg font-medium text-gray-600 mb-6 text-center lg:text-left">Lütfen bilgileri eksiksiz doldurunuz.</h2>
+        <h1 className="text-xl lg:text-2xl font-bold text-gray-800 mb-4 text-center lg:text-left">
+          Tasarruf Hesaplama Aracı
+        </h1>
+        <h2 className="text-sm lg:text-lg font-medium text-gray-600 mb-6 text-center lg:text-left">
+          Lütfen bilgileri eksiksiz doldurunuz.
+        </h2>
 
         <div className="space-y-4 lg:space-y-6">
           {/* Şehir Seçimi */}
           <div>
-            <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-2">Şehir Seçiniz</label>
+            <label
+              htmlFor="city"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Şehir Seçiniz
+            </label>
             <select
               id="city"
               className="block w-full rounded-lg border-gray-300 bg-gray-100 text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm py-3 px-4"
               onChange={(e) => setSelectedCity(e.target.value)}
             >
               <option value="">Seçiniz</option>
-              {cities.map(city => (
-                <option key={city} value={city}>{city}</option>
+              {cities.map((city) => (
+                <option key={city} value={city}>
+                  {city}
+                </option>
               ))}
             </select>
           </div>
 
           {/* Hane Türü */}
           <div>
-            <label htmlFor="homeType" className="block text-sm font-medium text-gray-700 mb-2">Hane Türü Seçiniz</label>
+            <label
+              htmlFor="homeType"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Hane Türü Seçiniz
+            </label>
             <select
               id="homeType"
               className="block w-full rounded-lg border-gray-300 bg-gray-100 text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm py-3 px-4"
@@ -107,7 +194,12 @@ const CalculaterContent = () => {
 
           {/* Ayda Kaç Gün Açık */}
           <div>
-            <label htmlFor="openDays" className="block text-sm font-medium text-gray-700 mb-2">Ayda Kaç Gün Açık?</label>
+            <label
+              htmlFor="openDays"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Ayda Kaç Gün Açık?
+            </label>
             <select
               id="openDays"
               className="block w-full rounded-lg border-gray-300 bg-gray-100 text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm py-3 px-4"
@@ -120,7 +212,12 @@ const CalculaterContent = () => {
 
           {/* Günde Kaç Saat */}
           <div>
-            <label htmlFor="openHours" className="block text-sm font-medium text-gray-700 mb-2">Günde Kaç Saat?</label>
+            <label
+              htmlFor="openHours"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Günde Kaç Saat?
+            </label>
             <select
               id="openHours"
               className="block w-full rounded-lg border-gray-300 bg-gray-100 text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm py-3 px-4"
@@ -133,10 +230,15 @@ const CalculaterContent = () => {
 
           {/* Kaç Personel */}
           <div>
-            <label htmlFor="personnel" className="block text-sm font-medium text-gray-700 mb-2">Kaç Personel?</label>
+            <label
+              htmlFor="personnel"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Kaç Personel?
+            </label>
             <input
               type="number"
-              placeholder='Personel Sayısı'
+              placeholder="Personel Sayısı"
               id="personnel"
               className="block w-full rounded-lg border-gray-300 bg-gray-100 text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm py-3 px-4"
               onChange={(e) => setSelectedWorkers(e.target.value)}
@@ -145,7 +247,12 @@ const CalculaterContent = () => {
 
           {/* Kaç Adet Tuvalet */}
           <div>
-            <label htmlFor="toilets" className="block text-sm font-medium text-gray-700 mb-2">Kaç Adet Tuvalet Mevcut?</label>
+            <label
+              htmlFor="toilets"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Kaç Adet Tuvalet Mevcut?
+            </label>
             <select
               id="toilets"
               className="block w-full rounded-lg border-gray-300 bg-gray-100 text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm py-3 px-4"
@@ -158,7 +265,12 @@ const CalculaterContent = () => {
 
           {/* Tuvaletteki Lavabolar Kaçlı */}
           <div>
-            <label htmlFor="lavabos" className="block text-sm font-medium text-gray-700 mb-2">Tuvaletteki Lavabolar Kaçlı?</label>
+            <label
+              htmlFor="lavabos"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Tuvaletteki Lavabolar Kaçlı?
+            </label>
             <select
               id="lavabos"
               className="block w-full rounded-lg border-gray-300 bg-gray-100 text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm py-3 px-4"
@@ -179,23 +291,17 @@ const CalculaterContent = () => {
       </div>
 
       {showResults && (
-        <div
-          className="bg-white p-6 rounded-lg shadow-lg transition-all duration-500 ease-in-out w-full lg:w-1/3 mt-6 lg:mt-0"
-        >
-          <h1 className="font-bold text-xl lg:text-2xl text-blue-600 mb-4 lg:mb-6">🎉 KAZANCINIZ!</h1>
+        <div className="bg-white p-6 rounded-lg shadow-lg transition-all duration-500 ease-in-out w-full lg:w-1/3 mt-6 lg:mt-0">
+          <h1 className="font-bold text-xl lg:text-2xl text-blue-600 mb-4 lg:mb-6">
+            🎉 KAZANCINIZ!
+          </h1>
           <div className="space-y-4 lg:space-y-6">
             <div className="flex items-center gap-4">
-              <span className="text-blue-500 text-3xl">💰</span>
+              <FaLeaf className="text-green-500 text-3xl" />
               <div>
-                <h2 className="font-semibold text-lg text-gray-800">Kurulum Maliyeti</h2>
-                <p className="text-gray-600 text-base">{results.setupCost.toFixed(2)} ₺</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <span className="text-green-500 text-3xl">🌿</span>
-              <div>
-                <h2 className="font-semibold text-lg text-gray-800">Tasarruf Miktarı</h2>
+                <h2 className="font-semibold text-lg text-gray-800">
+                  Tasarruf Miktarı
+                </h2>
                 <p className="text-gray-600 text-base">
                   Aylık: {results.savingsAmount.toFixed(2)} Litre <br />
                   Yıllık: {(results.savingsAmount * 12).toFixed(2)} Litre
@@ -204,9 +310,11 @@ const CalculaterContent = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <span className="text-yellow-500 text-3xl">📈</span>
+              <FaChartLine className="text-yellow-500 text-3xl" />
               <div>
-                <h2 className="font-semibold text-lg text-gray-800">Tasarruf Tutarı</h2>
+                <h2 className="font-semibold text-lg text-gray-800">
+                  Tasarruf Tutarı
+                </h2>
                 <p className="text-gray-600 text-base">
                   Aylık: {results.savingsValue.toFixed(2)} ₺ <br />
                   Yıllık: {(results.savingsValue * 12).toFixed(2)} ₺
@@ -215,9 +323,11 @@ const CalculaterContent = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <span className="text-red-500 text-3xl">🛠️</span>
+              <FaTools className="text-red-500 text-3xl" />
               <div>
-                <h2 className="font-semibold text-lg text-gray-800">Filtre Maliyeti</h2>
+                <h2 className="font-semibold text-lg text-gray-800">
+                  Filtre Maliyeti
+                </h2>
                 <p className="text-gray-600 text-base">
                   Aylık: {results.filterCost.toFixed(2)} ₺ <br />
                   Yıllık: {(results.filterCost * 12).toFixed(2)} ₺
@@ -226,9 +336,11 @@ const CalculaterContent = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <span className="text-indigo-500 text-3xl">⚡</span>
+              <FaBolt className="text-indigo-500 text-3xl" />
               <div>
-                <h2 className="font-semibold text-lg text-gray-800">Elektrik Maliyeti</h2>
+                <h2 className="font-semibold text-lg text-gray-800">
+                  Elektrik Maliyeti
+                </h2>
                 <p className="text-gray-600 text-base">
                   Aylık: {results.electricityCost.toFixed(2)} ₺ <br />
                   Yıllık: {(results.electricityCost * 12).toFixed(2)} ₺
@@ -237,30 +349,20 @@ const CalculaterContent = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <span className="text-green-600 text-3xl">🤑</span>
+              <FaMoneyBillWave className="text-green-600 text-3xl" />
               <div>
-                <h2 className="font-semibold text-lg text-gray-800">Net Kazanç Tutarı</h2>
+                <h2 className="font-semibold text-lg text-gray-800">
+                  Net Kazanç Tutarı
+                </h2>
                 <p className="text-gray-600 text-base">
                   Aylık: {results.netProfit.toFixed(2)} ₺ <br />
                   Yıllık: {(results.netProfit * 12).toFixed(2)} ₺
                 </p>
               </div>
             </div>
-
-            <div className="flex items-center gap-4">
-              <span className="text-purple-500 text-3xl">⏳</span>
-              <div>
-                <h2 className="font-semibold text-lg text-gray-800">Amorti Süresi</h2>
-                <p className="text-gray-600 text-base">
-                  {results.paybackPeriod} Ay <br />
-                  {(results.paybackPeriod / 12).toFixed(2)} Yıl
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       )}
-
     </div>
   );
 };

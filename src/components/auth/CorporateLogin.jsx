@@ -18,7 +18,7 @@ const CorporateLogin = () => {
             formData.append('username', email);
             formData.append('password', password);
 
-            const response = await axios.post('http://localhost:8000/login', formData, {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/login`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
