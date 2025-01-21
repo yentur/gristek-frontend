@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from "../dist/images/logo_.png";
+import logo from "../dist/images/gristek_logo_new_white.png";
 
 const Footer = () => {
   const menuItems = [

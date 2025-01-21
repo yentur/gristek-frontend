@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import logo from "../dist/images/logo2.png";
+import logo from "../dist/images/gristek_logo_new.png";
 
 const Header = () => {
   const [scrollDirection, setScrollDirection] = useState("up");

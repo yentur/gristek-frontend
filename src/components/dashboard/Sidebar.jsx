@@ -7,7 +7,7 @@ import {
   FiCheckCircle,
   FiMenu,
 } from "react-icons/fi";
-import logo from "../../dist/images/logo2.png";
+import logo from "../../dist/images/gristek_logo_new.png";
 
 const Sidebar = ({
   activePage,
