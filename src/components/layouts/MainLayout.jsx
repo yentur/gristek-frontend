@@ -9,6 +9,7 @@ const MainLayout = () => {
 
   // Layout kullanılmayacak rotalar
   const excludedPaths = [
+    "/",
     "/kurumsal-giris",
     "/bireysel-giris",
     "/bayi-giris",

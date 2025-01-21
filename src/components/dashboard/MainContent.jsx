@@ -45,7 +45,7 @@ const MainContent = () => {
     const [hourlyData, setHourlyData] = useState([]);
 
     // Constants for calculations
-    const waterTonPrice = 14.03;
+    const waterTonPrice = 44.35;
     const kwhPrice = 4.7792;
     const filterPrice = 500;
 

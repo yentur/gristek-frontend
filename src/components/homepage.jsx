@@ -9,6 +9,7 @@ import FiltrationSystem from "./FiltrationSystem";
 import UsageAreas from "./UsageAreas";
 import Footer from "./Footer";
 import Modal from "./Modal";
+import WhatsAppFAB from "./WhatsappFAB";
 
 const Homepage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -37,6 +38,7 @@ const Homepage = () => {
         <Benefits />
         <FiltrationSystem />
         <UsageAreas />
+        <WhatsAppFAB />
         <Footer />
         {showModal && <Modal onClose={closeModal} />}
       </div>
