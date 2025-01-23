@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import image1 from "../dist/images/gristek-kutu1.png";
-import image2 from "../dist/images/gristek-kutu3lu-1.png";
-import defaultProduct from "../dist/images/default_product.png";
+import image1 from "../../dist/images/gristek-kutu1.png";
+import image2 from "../../dist/images/gristek-kutu3lu-1.png";
+import defaultProduct from "../../dist/images/default_product.png";
 import { motion } from "framer-motion";
 import { Link, Navigate } from "react-router-dom";
 

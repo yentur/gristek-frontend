@@ -1,7 +1,5 @@
 import React from "react";
-import Header from "./Header";
-import Footer from "./Footer";
-import ProductContent from "./ProductContent";
+import ProductContent from "../components/Products/ProductContent";
 
 const Products = () => {
   return (

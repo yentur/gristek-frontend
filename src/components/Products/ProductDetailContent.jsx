@@ -1,11 +1,11 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import image1 from "../dist/images/gristek-kutu1.png";
-import image2 from "../dist/images/gristek-kutu3lu-1.png";
+import image1 from "../../dist/images/gristek-kutu1.png";
+import image2 from "../../dist/images/gristek-kutu3lu-1.png";
 import { ArrowRight, Star, Check } from "lucide-react";
 
-const ProductDetail = () => {
+const ProductDetailContent = () => {
   const { id } = useParams(); // URL'deki id'yi alır
   // Örnek veri, API veya state üzerinden veri çekebilirsiniz
   const sampleProducts = [
@@ -185,4 +185,4 @@ const ProductDetail = () => {
   );
 };
 
-export default ProductDetail;
+export default ProductDetailContent;

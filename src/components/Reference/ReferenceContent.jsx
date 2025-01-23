@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "../Header";
-import Footer from "../Footer";
+import Header from "../Layouts/Header";
+import Footer from "../Layouts/Footer";
 import ReferenceCard from "./ReferenceCard";
 
 const references = [
@@ -54,9 +54,9 @@ const references = [
   },
 ];
 
-const Reference = () => {
+const ReferenceContent = () => {
   return (
-    <div className="w-full h-full container mx-auto px-4 py-8">
+    <div className="w-full h-full container mx-auto px-4 md:py-8 mb-6">
       <h1 className="text-3xl font-bold text-center mb-8 text-">
         Referanslarımız
       </h1>
@@ -76,4 +76,4 @@ const Reference = () => {
   );
 };
 
-export default Reference;
+export default ReferenceContent;

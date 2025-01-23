@@ -1,7 +1,5 @@
 import React from "react";
-import Header from "./Header";
-import Footer from "./Footer";
-import AboutUsContent from "./AboutUsContent";
+import AboutUsContent from "../components/AboutUs/AboutUsContent";
 
 const AboutUs = () => {
   return (

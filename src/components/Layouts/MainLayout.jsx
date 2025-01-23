@@ -1,8 +1,8 @@
 import React from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import WhatsAppFAB from "../WhatsappFAB";
-import Header from "../Header";
-import Footer from "../Footer";
+import WhatsAppFAB from "./WhatsappFAB";
+import Header from "./Header";
+import Footer from "./Footer";
 
 const MainLayout = () => {
   const location = useLocation();
