@@ -1,98 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import "./water.css";
-import config from '../config.json';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
+import { useApi } from '../../context/ApiProvider';
 
 const Modal = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [savingsData, setSavingsData] = useState({
-    totalSavings: 0,
-    dailySavings: 0
-  });
   const [counters, setCounters] = useState({
     total: 0,
     daily: 0
   });
-  const [chartData, setChartData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  const fetchSavingsData = async () => {
-    try {
-      const response = await fetch(`${config.apiUrl}/tasarruf/`);
-      if (!response.ok) {
-        throw new Error('Tasarruf verisi alınamadı');
-      }
-      const data = await response.json();
-      setSavingsData({
-        totalSavings: data.totalSavings || 0,
-        dailySavings: data.dailySavings || 0
-      });
-      setCounters(prev => ({
-        total: data.totalSavings || prev.total,
-        daily: data.dailySavings || prev.daily
-      }));
-    } catch (error) {
-      console.error('Tasarruf verisi çekme hatası:', error);
-      setError('Tasarruf verisi alınamadı');
-    }
-  };
-
-  const fetchMonthlyData = async () => {
-    try {
-      const response = await fetch(`${config.apiUrl}/aylik-tasarruf`);
-      if (!response.ok) {
-        throw new Error('Aylık veri alınamadı');
-      }
-      const result = await response.json();
-      setChartData(result.data);
-    } catch (error) {
-      console.error('Aylık veri çekme hatası:', error);
-      setError('Aylık veriler alınamadı');
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { data, error } = useApi();
 
   useEffect(() => {
     setIsOpen(true);
 
-    const fetchInitialData = async () => {
-      await Promise.all([
-        fetchSavingsData(),
-        fetchMonthlyData()
-      ]);
-    };
-
-    fetchInitialData();
-
     const fetchInterval = setInterval(() => {
-      fetchSavingsData();
-    }, 1000);
-
-    const monthlyInterval = setInterval(() => {
-      fetchMonthlyData();
-    }, 300000);
-    return () => {
-      clearInterval(fetchInterval);
-      clearInterval(monthlyInterval);
-    };
-  }, []);
-
-  useEffect(() => {
-    const animationInterval = setInterval(() => {
       setCounters(prev => ({
-        total: prev.total < savingsData.totalSavings
-          ? prev.total + 1
-          : savingsData.totalSavings,
-        daily: prev.daily < savingsData.dailySavings
-          ? prev.daily + 1
-          : savingsData.dailySavings
+        total: prev.total < data.totalSavings ? prev.total + 1 : data.totalSavings,
+        daily: prev.daily < data.dailySavings ? prev.daily + 1 : data.dailySavings
       }));
     }, 50);
 
-    return () => clearInterval(animationInterval);
-  }, [savingsData]);
+    return () => clearInterval(fetchInterval);
+  }, [data]);
 
   const closeModal = () => {
     setIsOpen(false);
@@ -107,7 +37,6 @@ const Modal = () => {
         </h1>
       ));
   };
-
 
   return (
     <dialog id="my_modal_3" className={`modal ${isOpen ? 'modal-open' : ''}`}>
@@ -132,15 +61,15 @@ const Modal = () => {
             </div>
 
             <div className="chart">
-              {loading ? (
+              {error ? (
                 <div className="flex items-center justify-center h-[300px]">
-                  <span className="loading loading-spinner loading-lg"></span>
+                  <span className="text-red-500">{error}</span>
                 </div>
               ) : (
                 <BarChart
                   width={800}
                   height={300}
-                  data={chartData}
+                  data={data.monthlySavings}
                   margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" vertical={false} />

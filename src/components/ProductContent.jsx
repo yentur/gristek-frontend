@@ -41,7 +41,12 @@ const ProductContent = () => {
   };
 
   const fetchCategories = async () => {
-    const sampleCategories = [{ id: 2, name: "Gristek Modül", count: 2 }];
+    const sampleCategories = [
+      { id: 1, name: "Gristek Modüla", count: 2 },
+      { id: 2, name: "Gristek Modülb", count: 2 },
+      { id: 3, name: "Gristek Modülc", count: 2 },
+      { id: 4, name: "Gristek Modüld", count: 2 },
+    ];
     setCategories(sampleCategories);
   };
 
@@ -77,7 +82,7 @@ const ProductContent = () => {
   return (
     <div className="flex flex-col items-center w-full min-h-screen">
       <div
-        className="flex flex-col justify-center items-center bg-gradient-to-r from-blue-400 to-blue-900 w-full p-10 gap-y-6 animate-gradient"
+        className="flex flex-col justify-center items-center bg-gradient-to-r from-blue-400 to-blue-900 w-full py-10 gap-y-6 animate-gradient"
         style={{
           backgroundSize: "200% 200%", // Daha geniş bir gradyan alanı
         }}
@@ -90,23 +95,31 @@ const ProductContent = () => {
         >
           Ürünler
         </motion.h1>
-        <div className="flex flex-wrap justify-center gap-4">
-          {categories.map((category) => (
-            <motion.button
-              key={category.id}
-              onClick={() => handleCategoryClick(category.id)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={`flex flex-col items-center cursor-pointer ${
-                selectedCategory === category.id
-                  ? "bg-white text-blue-800 border-2 border-white"
-                  : "bg-blue-800 text-white border-2 border-opacity-50 border-white"
-              } px-6 py-3 rounded-full hover:bg-opacity-90 transition duration-300 shadow-lg`}
-            >
-              <p className="font-bold">{category.name}</p>
-              <span className="text-sm opacity-75">{category.count} Ürün</span>
-            </motion.button>
-          ))}
+        <div className="w-full py-4">
+          <div className="overflow-x-auto whitespace-nowrap px-4 md:overflow-visible no-scrollbar">
+            <div className="inline-flex md:flex md:flex-wrap md:justify-center gap-2 md:gap-4">
+              {categories.map((category) => (
+                <motion.button
+                  key={category.id}
+                  onClick={() => handleCategoryClick(category.id)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`flex flex-col items-center cursor-pointer w-auto sm:w-auto ${
+                    selectedCategory === category.id
+                      ? "bg-white text-blue-800 border-2 border-white"
+                      : "bg-blue-800 text-white border-2 border-opacity-50 border-white"
+                  } px-4 py-2 md:px-6 md:py-3 rounded-full hover:bg-opacity-90 transition duration-300 shadow-lg`}
+                >
+                  <p className="font-bold text-sm md:text-base text-center">
+                    {category.name}
+                  </p>
+                  <span className="text-xs md:text-sm opacity-75 text-center">
+                    {category.count} Ürün
+                  </span>
+                </motion.button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 

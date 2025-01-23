@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Header from "./Header";
+import Header from "../Header";
 import Hero from "./Hero";
 import Features from "./Features";
 import About from "./About";
@@ -7,11 +7,11 @@ import HowWeDoIt from "./HowWeDoIt";
 import Benefits from "./Benefits";
 import FiltrationSystem from "./FiltrationSystem";
 import UsageAreas from "./UsageAreas";
-import Footer from "./Footer";
+import Footer from "../Footer";
 import Modal from "./Modal";
-import WhatsAppFAB from "./WhatsappFAB";
+import WhatsAppFAB from "../WhatsappFAB";
 
-const Homepage = () => {
+const Home = () => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const Homepage = () => {
   };
 
   return (
-    <div className="bg-white font-sans">
+    <div className="bg-white font-sans overflow-y-auto">
       <Header />
       <div className="mt-20">
         <Hero />
@@ -46,4 +46,4 @@ const Homepage = () => {
   );
 };
 
-export default Homepage;
+export default Home;

@@ -136,7 +136,7 @@ const Analysis = () => {
 
   return (
     <div className="w-full h-full">
-      <div className="container mx-auto py-8">
+      <div className="container mx-auto md:py-12 px-4">
         {/* Sayfa Başlığı ve Açıklama */}
         <div className="text-start mb-10">
           <h1 className="text-3xl font-bold text-gray-800">
