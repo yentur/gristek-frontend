@@ -77,9 +77,9 @@ const ProductContent = () => {
   return (
     <div className="flex flex-col items-center w-full min-h-screen">
       <div
-        className="flex flex-col justify-center items-center bg-gradient-to-r from-blue-400 to-blue-900 w-full p-10 gap-y-6 animate-gradient"
+        className="flex flex-col justify-center items-center bg-back w-full p-10 gap-y-6 animate-gradient"
         style={{
-          backgroundSize: "200% 200%", // Daha geniş bir gradyan alanı
+          backgroundSize: "200% 200%", 
         }}
       >
         <motion.h1
@@ -100,7 +100,7 @@ const ProductContent = () => {
               className={`flex flex-col items-center cursor-pointer ${
                 selectedCategory === category.id
                   ? "bg-white text-blue-800 border-2 border-white"
-                  : "bg-blue-800 text-white border-2 border-opacity-50 border-white"
+                  : "bg-pc-200 text-white border-2 border-opacity-50 border-white"
               } px-6 py-3 rounded-full hover:bg-opacity-90 transition duration-300 shadow-lg`}
             >
               <p className="font-bold">{category.name}</p>
@@ -110,7 +110,7 @@ const ProductContent = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-16">
+      <div className="container w-full  flex justify-center items-center  px-4 py-16">
         {currentProducts.length === 0 ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -127,7 +127,7 @@ const ProductContent = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            className="flex justify-center items-center gap-8"
           >
             {currentProducts.map((product) => (
               <motion.div
@@ -157,7 +157,7 @@ const ProductContent = () => {
                   <p className="text-gray-600 mb-4">{product.description}</p>
                   <Link
                     to={`/urunler/${product.id}`}
-                    className="inline-block bg-blue-500 text-white font-semibold px-6 py-2 rounded-full transition-colors duration-300 hover:bg-blue-600"
+                    className="inline-block bg-pc-200 text-white font-semibold px-6 py-2 rounded-full transition-colors duration-300 hover:bg-blue-600"
                   >
                     Daha Fazla Bilgi Al
                   </Link>

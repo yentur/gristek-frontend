@@ -283,7 +283,7 @@ const CalculaterContent = () => {
         </div>
 
         <button
-          className="mt-6 w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+          className="mt-6 w-full bg-pc-200 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
           onClick={calculateResults}
         >
           Hesapla

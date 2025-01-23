@@ -149,7 +149,7 @@ const Analysis = () => {
 
         {/* Ekonomik Katkı */}
         <div
-          className="bg-gradient-to-br from-blue-400 to-blue-900 text-white text-center p-8 rounded-xl shadow-lg mb-10 animate-gradient-move"
+          className="bg-gradient-to-br from-pc-100 to-pc-200 text-white text-center p-8 rounded-xl shadow-lg mb-10 animate-gradient-move"
           style={{
             backgroundSize: "200% 200%",
             animation: "gradient-move 6s infinite",
