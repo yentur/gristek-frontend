@@ -157,7 +157,7 @@ const ProductContent = () => {
                   <p className="text-gray-600 mb-4">{product.description}</p>
                   <Link
                     to={`/urunler/${product.id}`}
-                    className="inline-block bg-pc-200 text-white font-semibold px-6 py-2 rounded-full transition-colors duration-300 hover:bg-blue-600"
+                    className="inline-block bg-pc-200 text-white font-semibold px-6 py-2 rounded-full transition-colors duration-300 hover:bg-pc-100"
                   >
                     Daha Fazla Bilgi Al
                   </Link>
