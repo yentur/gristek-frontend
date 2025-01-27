@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
-import Header from "./Header";
-import Hero from "./Hero";
-import Features from "./Features";
-import About from "./About";
-import HowWeDoIt from "./HowWeDoIt";
-import Benefits from "./Benefits";
-import FiltrationSystem from "./FiltrationSystem";
-import UsageAreas from "./UsageAreas";
-import Footer from "./Footer";
-import Modal from "./Modal";
-import WhatsAppFAB from "./WhatsappFAB";
+import Header from "../components/Layouts/Header";
+import Hero from "../components/Home/Hero";
+import Features from "../components/Home/Features";
+import About from "../components/Home/About";
+import HowWeDoIt from "../components/Home/HowWeDoIt";
+import Benefits from "../components/Home/Benefits";
+import FiltrationSystem from "../components/Home/FiltrationSystem";
+import UsageAreas from "../components/Home/UsageAreas";
+import Footer from "../components/Layouts/Footer";
+import Modal from "../components/Home/Modal";
+import WhatsAppFAB from "../components/Layouts/WhatsappFAB";
 
-const Homepage = () => {
+const Home = () => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const Homepage = () => {
   };
 
   return (
-    <div className="bg-white font-sans">
+    <div className="bg-white font-sans overflow-y-auto">
       <Header />
       <div className="mt-20">
         <Hero />
@@ -46,4 +46,4 @@ const Homepage = () => {
   );
 };
 
-export default Homepage;
+export default Home;

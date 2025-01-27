@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import image1 from "../dist/images/gristek-kutu1.png";
-import image2 from "../dist/images/gristek-kutu3lu-1.png";
-import defaultProduct from "../dist/images/default_product.png";
+import image1 from "../../dist/images/gristek-kutu1.png";
+import image2 from "../../dist/images/gristek-kutu3lu-1.png";
+import defaultProduct from "../../dist/images/default_product.png";
 import { motion } from "framer-motion";
 import { Link, Navigate } from "react-router-dom";
 
@@ -41,7 +41,12 @@ const ProductContent = () => {
   };
 
   const fetchCategories = async () => {
-    const sampleCategories = [{ id: 2, name: "Gristek Modül", count: 2 }];
+    const sampleCategories = [
+      { id: 1, name: "Gristek Modüla", count: 2 },
+      { id: 2, name: "Gristek Modülb", count: 2 },
+      { id: 3, name: "Gristek Modülc", count: 2 },
+      { id: 4, name: "Gristek Modüld", count: 2 },
+    ];
     setCategories(sampleCategories);
   };
 
@@ -79,7 +84,7 @@ const ProductContent = () => {
       <div
         className="flex flex-col justify-center items-center bg-back w-full p-10 gap-y-6 animate-gradient"
         style={{
-          backgroundSize: "200% 200%", 
+          backgroundSize: "200% 200%",
         }}
       >
         <motion.h1

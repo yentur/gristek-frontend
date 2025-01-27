@@ -1,5 +1,5 @@
 import React from 'react';
-import kutu_image from '../dist/images/gristek_kutu1.png'
+import kutu_image from '../../dist/images/gristek_kutu1.png'
 const FiltrationSystem = () => {
     return (
       <section className="bg-cover bg-center  bg-back py-20">

@@ -1,5 +1,5 @@
 import React from 'react';
-import gristek_image from '../dist/images/gristek-nedir1.jpg'
+import gristek_image from '../../dist/images/gristek-nedir1.jpg'
 const About = () => {
     return (
       <section className=" bg-cover bg-center  bg-back py-20">

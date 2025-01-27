@@ -1,5 +1,5 @@
 import React from 'react';
-import gristek_image from '../dist/images/gristek-fayda1.jpg'
+import gristek_image from '../../dist/images/gristek-fayda1.jpg'
 const Benefits = () => {
     return (
       <section className="py-20 bg-gray-100">

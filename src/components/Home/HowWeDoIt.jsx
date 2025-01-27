@@ -1,5 +1,5 @@
 import React from 'react';
-import image from "../dist/images/nasil-yapiyoruz1-1.png"
+import image from "../../dist/images/nasil-yapiyoruz1-1.png"
 const HowWeDoIt = () => {
     return (
       <section className="py-20">

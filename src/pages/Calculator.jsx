@@ -1,7 +1,5 @@
 import React from "react";
-import Header from "./Header";
-import Footer from "./Footer";
-import CalculaterContent from "./CalculatorContent";
+import CalculaterContent from "../components/Calculator/CalculatorContent";
 
 const Calculater = () => {
   return (

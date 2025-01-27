@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import TurkeyMap from "turkey-map-react";
-import Header from "./Header";
-import Footer from "./Footer";
-import waterBG from "../dist/images/water.jpeg";
+import waterBG from "../../dist/images/water.jpeg";
 
 const _data = {
   totalModules: 0, // Başlangıçta 0
@@ -106,7 +104,7 @@ const getTopSavingCity = () => {
   return { cityName, savings: cityData.savings };
 };
 
-const Analysis = () => {
+const AnalysisContent = () => {
   const [hoveredCity, setHoveredCity] = useState("");
   const [hoveredCityData, setHoveredCityData] = useState(null);
   const [modalData, setModalData] = useState(null);
@@ -136,7 +134,7 @@ const Analysis = () => {
 
   return (
     <div className="w-full h-full">
-      <div className="container mx-auto py-8">
+      <div className="container mx-auto md:py-12 px-4">
         {/* Sayfa Başlığı ve Açıklama */}
         <div className="text-start mb-10">
           <h1 className="text-3xl font-bold text-gray-800">
@@ -149,14 +147,14 @@ const Analysis = () => {
 
         {/* Ekonomik Katkı */}
         <div
-          className="bg-gradient-to-br from-pc-100 to-pc-200 text-white text-center p-8 rounded-xl shadow-lg mb-10 animate-gradient-move"
+          className="bg-gradient-to-br from-pc-100 to-pc-200 text-white text-center p-8 rounded-xl shadow-lg mb-6 animate-gradient-move"
           style={{
             backgroundSize: "200% 200%",
             animation: "gradient-move 6s infinite",
           }}
         >
           <h2
-            className="text-2xl font-extrabold"
+            className="text-xl font-extrabold"
             style={{ textShadow: "2px 2px 6px rgba(0, 0, 0, 0.6)" }}
           >
             Ülke Ekonomisine Katkı
@@ -168,7 +166,7 @@ const Analysis = () => {
             {economicImpact} ₺
           </p>
           <p
-            className="text-md mt-4"
+            className="text-sm mt-4"
             style={{ textShadow: "1px 1px 4px rgba(0, 0, 0, 0.5)" }}
           >
             Su tasarrufu ile Türkiye genelinde yapılan toplam ekonomik katkı.
@@ -176,7 +174,7 @@ const Analysis = () => {
         </div>
 
         {/* Üst Kartlar */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           {/* Toplam Modül Sayısı */}
           <div
             className="bg-gray-700 text-white p-6 rounded-xl shadow-lg transform transition duration-500 hover:scale-105"
@@ -245,7 +243,7 @@ const Analysis = () => {
             <TurkeyMap
               customStyle={{
                 idleColor: "#cbd5e1",
-                hoverColor: "#4f46e5",
+                hoverColor: "#5f56c6",
                 textColor: "#374151",
               }}
               hoverable
@@ -360,4 +358,4 @@ const Analysis = () => {
   );
 };
 
-export default Analysis;
+export default AnalysisContent;
