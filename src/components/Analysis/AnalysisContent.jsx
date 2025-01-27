@@ -13,13 +13,13 @@ const _data = {
       pricePerTon: {
         kamu: 36.29, // Kamu için ton başına fiyat
         isyeri: 92.46, // İş yeri için ton başına fiyat
-        osb: 92.46, // OSB için ton başına fiyat
+        osb: 92.46, 
       },
       usage: { kamu: 80, isyeri: 10, osb: 10 },
     },
     İstanbul: {
       name: "İstanbul",
-      modules: 0, // Başlangıçta 0
+      modules: 0, 
       savings: 675832,
       pricePerTon: {
         kamu: 36.72,
@@ -40,14 +40,8 @@ const calculateData = (data) => {
       // usage değerlerinden modules hesapla
       const calculatedModules =
         cityData.usage.kamu + cityData.usage.isyeri + cityData.usage.osb;
-
-      // savings'i toplama ekle
       totalSavings += cityData.savings;
-
-      // modules'i toplama ekle
       totalModules += calculatedModules;
-
-      // Şehir verisini güncelle
       acc[cityName] = {
         ...cityData,
         modules: calculatedModules,
