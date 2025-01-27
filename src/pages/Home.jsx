@@ -10,6 +10,7 @@ import UsageAreas from "../components/Home/UsageAreas";
 import Footer from "../components/Layouts/Footer";
 import Modal from "../components/Home/Modal";
 import WhatsAppFAB from "../components/Layouts/WhatsappFAB";
+import OurReferences from "../components/Home/OurReferences";
 
 const Home = () => {
   const [showModal, setShowModal] = useState(false);
@@ -38,6 +39,7 @@ const Home = () => {
         <Benefits />
         <FiltrationSystem />
         <UsageAreas />
+        <OurReferences />
         <WhatsAppFAB />
         <Footer />
         {showModal && <Modal onClose={closeModal} />}
