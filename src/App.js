@@ -5,7 +5,6 @@ import PrivateRoute from "./PrivateRoute";
 import { ApiProvider } from "./context/ApiProvider";
 
 import Home from "./pages/Home";
-
 import AboutUs from "./pages/AboutUs";
 import Calculator from "./pages/Calculator";
 import Analysis from "./pages/Analysis";
