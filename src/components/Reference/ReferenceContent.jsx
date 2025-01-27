@@ -5,52 +5,22 @@ import ReferenceCard from "./ReferenceCard";
 
 const references = [
   {
-    name: "Ahmet Yılmaz",
-    company: "Tech Innovations Ltd.",
-    position: "CTO",
-    content:
-      "Bu ekip ile çalışmak gerçekten harika bir deneyimdi. Projemizi zamanında ve bütçe dahilinde tamamladılar.",
-    avatar: "https://placehold.co/40",
+    name: "Çorum Belediyesi",
+    avatar:
+      "https://logowik.com/content/uploads/images/corum-belediyesi9402.jpg",
+    url: "https://www.corum.bel.tr",
   },
   {
-    name: "Ayşe Kaya",
-    company: "Global Solutions Inc.",
-    position: "Proje Yöneticisi",
-    content:
-      "Profesyonel yaklaşımları ve teknik uzmanlıkları ile beklentilerimizin ötesine geçtiler.",
-    avatar: "https://placehold.co/40",
+    name: "Çorum Belediyesi Soyal Tesisleri",
+    avatar:
+      "https://scontent.fszf1-1.fna.fbcdn.net/v/t1.6435-9/67839729_105104177512489_2163973182795546624_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=X1Q6ZxMdvOoQ7kNvgECQlNO&_nc_oc=Adj9xc_9sgm0meWocf5bb89hfsWclgfWjPBFDilLMFEG26jlFPjGtc8Fqj0UYrksigg&_nc_zt=23&_nc_ht=scontent.fszf1-1.fna&_nc_gid=A1BBpIUj9f1Wb7PxG8xqT2N&oh=00_AYBEDOuyI4TUjZPhrlz4ra90zBTPqfyfltHZOZ2xAnRjNQ&oe=67BEED5E",
+    url: "https://www.corumbeltur.com.tr",
   },
   {
-    name: "Mehmet Demir",
-    company: "Startup Ventures",
-    position: "Kurucu Ortak",
-    content:
-      "Yaratıcı çözümleri ve müşteri odaklı yaklaşımları ile projemize büyük değer kattılar.",
-    avatar: "https://placehold.co/40",
-  },
-  {
-    name: "Zeynep Şahin",
-    company: "E-commerce Giants",
-    position: "Pazarlama Direktörü",
-    content:
-      "Dijital dönüşüm sürecimizde bize rehberlik ettiler. Sonuçlar beklediğimizden çok daha iyi oldu.",
-    avatar: "https://placehold.co/40",
-  },
-  {
-    name: "Can Özturk",
-    company: "FinTech Solutions",
-    position: "Ürün Yöneticisi",
-    content:
-      "Teknik bilgileri ve sektör tecrübeleri ile ürünümüzü bir üst seviyeye taşıdılar.",
-    avatar: "https://placehold.co/40",
-  },
-  {
-    name: "Elif Yıldız",
-    company: "Health & Tech Co.",
-    position: "İK Direktörü",
-    content:
-      "Ekip çalışmaları ve iletişim becerileri mükemmeldi. Kesinlikle tekrar çalışmak isteriz.",
-    avatar: "https://placehold.co/40",
+    name: "İSTAÇ A.Ş.",
+    avatar:
+      "https://yt3.googleusercontent.com/Oay2Dzbg23llfPESqmIZft0gOrGzwAMuSQAcrng5NzV_Zv1diaBXfkRkgW-_Cy3blSvSEdok=s900-c-k-c0x00ffffff-no-rj",
+    url: "https://www.istac.istanbul",
   },
 ];
 
@@ -64,11 +34,9 @@ const ReferenceContent = () => {
         {references.map((reference, index) => (
           <ReferenceCard
             key={index}
-            customerName={reference.name}
-            feedback={reference.content}
+            name={reference.name}
             avatar={reference.avatar}
-            position={reference.position}
-            company={reference.company}
+            url={reference.url}
           />
         ))}
       </div>
