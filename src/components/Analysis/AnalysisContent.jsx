@@ -1,23 +1,24 @@
 import React, { useState } from "react";
 import TurkeyMap from "turkey-map-react";
 import waterBG from "../../dist/images/water.jpeg";
+import { useApi } from "../../context/ApiProvider";
 
 const _data = {
-  totalModules: 0, // Başlangıçta 0
-  totalSavings: 0, // Başlangıçta 0
+  totalModules: 2, // Başlangıçta 0
+  totalSavings: 26160, // Başlangıçta 0
   cities: {
     Çorum: {
       name: "Çorum",
       modules: 2, // Başlangıçta 0
-      savings: 0,
+      savings: 26160,
       pricePerTon: {
         kamu: 24.45, // Kamu için ton başına fiyat
         isyeri: 44.37, // İş yeri için ton başına fiyat
         osb: 69.9, // OSB için ton başına fiyat
       },
-      usage: { kamu: 1, isyeri: 1, osb: 0 },
-    },
-  }
+      usage: { kamu: 1, isyeri: 1, osb: 0 },
+    },
+  },
 };
 
 const calculateData = (data) => {
@@ -49,27 +50,29 @@ const calculateData = (data) => {
   };
 };
 
-const data = calculateData(_data);
+const dataj = calculateData(_data);
 
-const calculateEconomicImpact = () => {
+const calculateEconomicImpact = (total, priceTon) => {
   let totalGrossImpact = 0;
 
-  Object.entries(_data.cities).forEach(([_, cityData]) => {
-    // Kamu tasarrufu: Ton başına fiyat * kullanılan kamu modülleri
-    const kamuSavingsInTons = cityData.usage.kamu; // Kamu kullanım miktarı zaten ton
-    const kamuImpact = kamuSavingsInTons * cityData.pricePerTon.kamu;
+  totalGrossImpact = (total) * priceTon;
 
-    // İş yeri tasarrufu
-    const isyeriSavingsInTons = cityData.usage.isyeri; // İş yeri kullanım miktarı
-    const isyeriImpact = isyeriSavingsInTons * cityData.pricePerTon.isyeri;
+  // Object.entries(_data.cities).forEach(([_, cityData]) => {
+  //   // Kamu tasarrufu: Ton başına fiyat * kullanılan kamu modülleri
+  //   const kamuSavingsInTons = cityData.usage.kamu; // Kamu kullanım miktarı zaten ton
+  //   const kamuImpact = kamuSavingsInTons * cityData.pricePerTon.kamu;
 
-    // OSB tasarrufu
-    const osbSavingsInTons = cityData.usage.osb; // OSB kullanım miktarı
-    const osbImpact = osbSavingsInTons * cityData.pricePerTon.osb;
+  //   // İş yeri tasarrufu
+  //   const isyeriSavingsInTons = cityData.usage.isyeri; // İş yeri kullanım miktarı
+  //   const isyeriImpact = isyeriSavingsInTons * cityData.pricePerTon.isyeri;
 
-    // Şehir bazlı toplam etkiyi ekle
-    totalGrossImpact += kamuImpact + isyeriImpact + osbImpact;
-  });
+  //   // OSB tasarrufu
+  //   const osbSavingsInTons = cityData.usage.osb; // OSB kullanım miktarı
+  //   const osbImpact = osbSavingsInTons * cityData.pricePerTon.osb;
+
+  //   // Şehir bazlı toplam etkiyi ekle
+  //   totalGrossImpact += kamuImpact + isyeriImpact + osbImpact;
+  // });
 
   // Toplam kazançtan %3 düş
   const netImpact = totalGrossImpact * 0.97;
@@ -78,7 +81,7 @@ const calculateEconomicImpact = () => {
 
 const getTopSavingCity = () => {
   // Verileri şehirlerin tasarruf miktarına göre sıralar
-  const sortedCities = Object.entries(data.cities).sort(
+  const sortedCities = Object.entries(dataj.cities).sort(
     ([, a], [, b]) => b.savings - a.savings
   );
 
@@ -88,13 +91,16 @@ const getTopSavingCity = () => {
 };
 
 const AnalysisContent = () => {
+  const { data, error } = useApi();
+  const { totalSavings } = data;
+
   const [hoveredCity, setHoveredCity] = useState("");
   const [hoveredCityData, setHoveredCityData] = useState(null);
   const [modalData, setModalData] = useState(null);
 
   const handleHover = (city) => {
     setHoveredCity(city.name);
-    setHoveredCityData(data.cities[city.name] || null);
+    setHoveredCityData(dataj.cities[city.name] || null);
   };
 
   const handleHoverLeave = () => {
@@ -103,16 +109,16 @@ const AnalysisContent = () => {
   };
 
   const handleCityClick = (city) => {
-    if (!data.cities[city.name]) return;
+    if (!dataj.cities[city.name]) return;
 
-    setModalData(data.cities[city.name] || null);
+    setModalData(dataj.cities[city.name] || null);
   };
 
   const closeModal = () => {
     setModalData(null);
   };
 
-  const economicImpact = calculateEconomicImpact();
+  const economicImpact = calculateEconomicImpact(totalSavings, 44.37);
   const { cityName: topCity, savings: topSavings } = getTopSavingCity();
 
   return (
@@ -171,7 +177,7 @@ const AnalysisContent = () => {
             <h2 className="text-lg font-semibold mb-4">
               Toplam GRİSTEK Modül Sayısı
             </h2>
-            <p className="text-4xl font-extrabold">{data.totalModules}</p>
+            <p className="text-4xl font-extrabold">{dataj.totalModules}</p>
             <div className="mt-4 text-sm opacity-75">
               Türkiye genelinde kullanılan modüller.
             </div>
@@ -189,7 +195,7 @@ const AnalysisContent = () => {
           >
             <h2 className="text-lg font-semibold mb-4">Toplam Su Tasarrufu</h2>
             <p className="text-4xl font-extrabold">
-              {(data.totalSavings / 1000).toLocaleString()} m³
+              {totalSavings} m³
             </p>
             <div className="mt-4 text-sm opacity-75">
               Tüm modüllerle sağlanan toplam tasarruf.
