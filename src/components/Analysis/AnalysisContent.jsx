@@ -6,29 +6,18 @@ const _data = {
   totalModules: 0, // Başlangıçta 0
   totalSavings: 0, // Başlangıçta 0
   cities: {
-    Ankara: {
-      name: "Ankara",
-      modules: 0, // Başlangıçta 0
-      savings: 259863,
+    Çorum: {
+      name: "Çorum",
+      modules: 2, // Başlangıçta 0
+      savings: 0,
       pricePerTon: {
-        kamu: 36.29, // Kamu için ton başına fiyat
-        isyeri: 92.46, // İş yeri için ton başına fiyat
-        osb: 92.46, 
+        kamu: 24.45, // Kamu için ton başına fiyat
+        isyeri: 44.37, // İş yeri için ton başına fiyat
+        osb: 69.9, // OSB için ton başına fiyat
       },
-      usage: { kamu: 80, isyeri: 10, osb: 10 },
-    },
-    İstanbul: {
-      name: "İstanbul",
-      modules: 0, 
-      savings: 675832,
-      pricePerTon: {
-        kamu: 36.72,
-        isyeri: 109.35,
-        osb: 109.35,
-      },
-      usage: { kamu: 60, isyeri: 20, osb: 20 },
-    },
-  },
+      usage: { kamu: 1, isyeri: 1, osb: 0 },
+    },
+  }
 };
 
 const calculateData = (data) => {
