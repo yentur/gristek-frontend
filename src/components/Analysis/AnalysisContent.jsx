@@ -217,7 +217,7 @@ const AnalysisContent = () => {
             </h2>
             <p className="text-4xl font-extrabold">{topCity}</p>
             <div className="mt-4 text-sm opacity-75">
-              {topCity}, {topSavings.toLocaleString()} litre su tasarrufu ile
+              {topCity}, {totalSavings * 1000} litre su tasarrufu ile
               lider.
             </div>
           </div>
