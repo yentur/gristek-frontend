@@ -18,6 +18,11 @@ const Sidebar = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false); // Sidebar aç/kapa durumu
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/kurumsal-giris";
+  };
+
   return (
     <>
       {/* Mobil Menü */}
@@ -107,13 +112,13 @@ const Sidebar = ({
           </a>
           {/* Logout */}
           <div className="p-4 border-t border-gray-200 mt-auto">
-            <a
-              href="#"
+            <button
+            onClick={handleLogout}
               className="flex items-center text-gray-700 hover:text-red-500 hover:bg-gray-100 px-4 py-3 rounded-lg transition-all duration-200"
             >
               <FiLogOut className="mr-3 text-lg" />
               Çıkış Yap
-            </a>
+            </button>
           </div>
         </nav>
       </aside>

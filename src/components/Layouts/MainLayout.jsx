@@ -22,7 +22,7 @@ const MainLayout = () => {
   console.log(location.pathname);
 
   return (
-    <div className="bg-white w-full h-full overflow-y-auto">
+    <div className="bg-white w-full h-screen overflow-y-auto">
       {shouldShowLayout && <Header />}
       <div
         className={`flex flex-col w-full h-full justify-center items-start gap-y-14 ${

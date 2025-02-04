@@ -46,7 +46,7 @@ const Hero = () => {
               <h2 className="text-2xl font-bold text-blue-500 mt-2">
                 {error ? (
                   <div className="text-red-500 text-center text-sm mb-4">{error}</div>
-                ) : dailySavings && dailySavings !== null ? (
+                ) : dailySavings || dailySavings == 0 ? (
                   <CountUp
                     end={dailySavings}
                     duration={3}

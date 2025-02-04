@@ -1,108 +1,93 @@
-import React from "react";
-import { FaCheckCircle, FaExclamationTriangle, FaPauseCircle } from "react-icons/fa";
+import { FaCheckCircle, FaMapMarkerAlt, FaWater, FaCube } from "react-icons/fa"
+import { IoMdClose } from "react-icons/io"
+import gristek_kutu from "../../dist/images/gristek-kutu1.png"
 
-const DashboardModal = ({ title, groupedDevices, onClose }) => {
-    return (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg shadow-lg w-full max-w-md md:max-w-2xl lg:max-w-4xl h-auto p-4 sm:p-6 relative overflow-y-auto">
-                {/* Başlık ve Kapatma Düğmesi */}
-                <div className="flex justify-between items-center border-b pb-4">
-                    <h3 className="text-lg md:text-xl font-semibold text-gray-800">{title}</h3>
-                    <button
-                        onClick={onClose}
-                        className="text-gray-600 hover:text-gray-800 transition"
-                    >
-                        ✕
-                    </button>
-                </div>
+const DashboardModal = ({ title, devices, onClose }) => {
+  const formatNumber = (number) => {
+    return Number.isNaN(number) ? "0" : new Intl.NumberFormat("tr-TR").format(number)
+  }
 
-                {/* İçerik */}
-                <div className="mt-4 mb-4 max-h-[70vh] overflow-y-auto space-y-6">
-                    {Object.keys(groupedDevices).map((location) => {
-                        const devices = groupedDevices[location];
-                        const activeDevices = devices.filter((d) => d.status === "Aktif").length;
-                        const pendingDevices = devices.filter((d) => d.status === "Beklemede").length;
-                        const faultyDevices = devices.filter((d) => d.status === "Arızalı").length;
-
-                        return (
-                            <details key={location} className="p-4 bg-gray-100 rounded-md">
-                                <summary className="flex justify-between items-center cursor-pointer">
-                                    <div>
-                                        <h4 className="text-sm md:text-lg font-semibold text-gray-800">
-                                            {location}
-                                        </h4>
-                                        <p className="text-xs md:text-sm text-gray-600">
-                                            Toplam: {devices.length} cihaz
-                                        </p>
-                                    </div>
-                                    <div className="flex space-x-2 md:space-x-4">
-                                        {/* Aktif Cihazlar */}
-                                        <div className="flex items-center space-x-1 md:space-x-2">
-                                            <FaCheckCircle className="text-green-500 text-sm md:text-lg" />
-                                            <span className="text-xs md:text-sm text-gray-600">
-                                                {activeDevices}
-                                            </span>
-                                        </div>
-                                        {/* Beklemede Cihazlar */}
-                                        <div className="flex items-center space-x-1 md:space-x-2">
-                                            <FaPauseCircle className="text-yellow-500 text-sm md:text-lg" />
-                                            <span className="text-xs md:text-sm text-gray-600">
-                                                {pendingDevices}
-                                            </span>
-                                        </div>
-                                        {/* Arızalı Cihazlar */}
-                                        <div className="flex items-center space-x-1 md:space-x-2">
-                                            <FaExclamationTriangle className="text-red-500 text-sm md:text-lg" />
-                                            <span className="text-xs md:text-sm text-gray-600">
-                                                {faultyDevices}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </summary>
-
-                                {/* Cihaz Detayları */}
-                                <div className="mt-4 space-y-4">
-                                    {devices.map((device) => (
-                                        <div
-                                            key={device.id}
-                                            className="flex flex-col md:flex-row items-start bg-white p-4 rounded-md border border-gray-200"
-                                        >
-                                            <img
-                                                src={device.image}
-                                                alt={device.name}
-                                                className="w-16 h-16 rounded-md mb-4 md:mb-0 md:mr-4 object-cover"
-                                            />
-                                            <div>
-                                                <h5 className="text-sm md:text-md font-medium text-gray-800">
-                                                    {device.name} ({device.status})
-                                                </h5>
-                                                <p className="text-xs md:text-sm text-gray-600">
-                                                    Tasarruf Miktarı: {device.saving}
-                                                </p>
-                                                <p className="text-xs md:text-sm text-gray-600">
-                                                    {device.details}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </details>
-                        );
-                    })}
-                </div>
-
-                {/* Kapatma Düğmesi */}
-                <div className="flex justify-end pt-4 border-t">
-                    <button
-                        onClick={onClose}
-                        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
-                    >
-                        Kapat
-                    </button>
-                </div>
-            </div>
+  return (
+    <div className="fixed inset-0 bg-gray-900 bg-opacity-75 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-4xl h-[90vh] flex flex-col">
+        {/* Header */}
+        <div className="flex justify-between items-center p-6 border-b border-gray-200 dark:border-gray-700">
+          <h3 className="text-2xl font-bold text-gray-800 dark:text-white">{title}</h3>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white transition-colors"
+            aria-label="Kapat"
+          >
+            <IoMdClose size={24} />
+          </button>
         </div>
-    );
-};
 
-export default DashboardModal;
+        {/* Device List */}
+        <div className="flex-grow overflow-y-auto p-6 space-y-6">
+          {devices.map((device) => {
+            const moduleParts = device.Modules.split("+")
+            const moduleCount = moduleParts.length > 1 ? Number.parseInt(moduleParts[1], 10) + 1 : 1
+
+            return (
+              <div
+                key={device.ID}
+                className="bg-gray-50 dark:bg-gray-700 rounded-xl p-6 shadow-md transition-all hover:shadow-lg"
+              >
+                <div className="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6">
+                  {/* Device Image */}
+                  <div className="relative w-20 h-20 md:w-24 md:h-24">
+                    <img
+                      src={gristek_kutu}
+                      alt={`Device ${device.DeviceNo}`}
+                      layout="fill"
+                      objectFit="cover"
+                      className="rounded-lg"
+                    />
+                  </div>
+
+                  {/* Device Info */}
+                  <div className="flex-grow">
+                    <h4 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
+                      {device.LocationAt} - {device.DeviceNo}
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                      <p className="flex items-center text-gray-600 dark:text-gray-300">
+                        <FaMapMarkerAlt className="mr-2" />
+                        {device.City}, {device.Location}
+                      </p>
+                      <p className="flex items-center text-gray-600 dark:text-gray-300">
+                        <FaCube className="mr-2" />
+                        {moduleCount} modül
+                      </p>
+                      <p className="flex items-center text-gray-600 dark:text-gray-300">
+                        <FaWater className="mr-2" />
+                        Tasarruf: {formatNumber(device.Savings)} L ({formatNumber(device.Savings / 10000)} m³)
+                      </p>
+                      <p className="flex items-center text-green-500">
+                        <FaCheckCircle className="mr-2" />
+                        Aktif
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* Footer */}
+        <div className="p-6 border-t border-gray-200 dark:border-gray-700">
+          <button
+            onClick={onClose}
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+          >
+            Kapat
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default DashboardModal
+

@@ -3,96 +3,15 @@ import TurkeyMap from "turkey-map-react";
 import waterBG from "../../dist/images/water.jpeg";
 import { useApi } from "../../context/ApiProvider";
 
-const _data = {
-  totalModules: 2, // Başlangıçta 0
-  totalSavings: 26160, // Başlangıçta 0
-  cities: {
-    Çorum: {
-      name: "Çorum",
-      modules: 2, // Başlangıçta 0
-      savings: 26160,
-      pricePerTon: {
-        kamu: 24.45, // Kamu için ton başına fiyat
-        isyeri: 44.37, // İş yeri için ton başına fiyat
-        osb: 69.9, // OSB için ton başına fiyat
-      },
-      usage: { kamu: 1, isyeri: 1, osb: 0 },
-    },
-  },
-};
-
-const calculateData = (data) => {
-  let totalModules = 0;
-  let totalSavings = 0;
-
-  const updatedCities = Object.entries(data.cities).reduce(
-    (acc, [cityName, cityData]) => {
-      // usage değerlerinden modules hesapla
-      const calculatedModules =
-        cityData.usage.kamu + cityData.usage.isyeri + cityData.usage.osb;
-      totalSavings += cityData.savings;
-      totalModules += calculatedModules;
-      acc[cityName] = {
-        ...cityData,
-        modules: calculatedModules,
-      };
-
-      return acc;
-    },
-    {}
-  );
-
-  return {
-    ...data,
-    totalModules,
-    totalSavings,
-    cities: updatedCities,
-  };
-};
-
-const dataj = calculateData(_data);
-
-const calculateEconomicImpact = (total, priceTon) => {
-  let totalGrossImpact = 0;
-
-  totalGrossImpact = (total) * priceTon;
-
-  // Object.entries(_data.cities).forEach(([_, cityData]) => {
-  //   // Kamu tasarrufu: Ton başına fiyat * kullanılan kamu modülleri
-  //   const kamuSavingsInTons = cityData.usage.kamu; // Kamu kullanım miktarı zaten ton
-  //   const kamuImpact = kamuSavingsInTons * cityData.pricePerTon.kamu;
-
-  //   // İş yeri tasarrufu
-  //   const isyeriSavingsInTons = cityData.usage.isyeri; // İş yeri kullanım miktarı
-  //   const isyeriImpact = isyeriSavingsInTons * cityData.pricePerTon.isyeri;
-
-  //   // OSB tasarrufu
-  //   const osbSavingsInTons = cityData.usage.osb; // OSB kullanım miktarı
-  //   const osbImpact = osbSavingsInTons * cityData.pricePerTon.osb;
-
-  //   // Şehir bazlı toplam etkiyi ekle
-  //   totalGrossImpact += kamuImpact + isyeriImpact + osbImpact;
-  // });
-
-  // Toplam kazançtan %3 düş
-  const netImpact = totalGrossImpact * 0.97;
-  return netImpact.toFixed(2); // İki ondalık basamak
-};
-
-const getTopSavingCity = () => {
-  // Verileri şehirlerin tasarruf miktarına göre sıralar
-  const sortedCities = Object.entries(dataj.cities).sort(
-    ([, a], [, b]) => b.savings - a.savings
-  );
-
-  // En fazla tasarruf yapan ilk şehri alır
-  const [cityName, cityData] = sortedCities[0];
-  return { cityName, savings: cityData.savings };
-};
-
 const AnalysisContent = () => {
   const { data, error } = useApi();
-  const { totalSavings } = data;
+  const {
+    citiesOverview,
+    totalSavings,
+    totalModules,
+    economicImpact,
+    topSavingCity,
+  } = data;
 
   const [hoveredCity, setHoveredCity] = useState("");
   const [hoveredCityData, setHoveredCityData] = useState(null);
@@ -100,7 +19,7 @@ const AnalysisContent = () => {
 
   const handleHover = (city) => {
     setHoveredCity(city.name);
-    setHoveredCityData(dataj.cities[city.name] || null);
+    setHoveredCityData(citiesOverview[city.name] || null);
   };
 
   const handleHoverLeave = () => {
@@ -109,17 +28,20 @@ const AnalysisContent = () => {
   };
 
   const handleCityClick = (city) => {
-    if (!dataj.cities[city.name]) return;
-
-    setModalData(dataj.cities[city.name] || null);
+    if (!citiesOverview[city.name]) return;
+    setModalData(citiesOverview[city.name] || null);
   };
 
   const closeModal = () => {
     setModalData(null);
   };
 
-  const economicImpact = calculateEconomicImpact(totalSavings, 44.37);
-  const { cityName: topCity, savings: topSavings } = getTopSavingCity();
+  const priceFormatter = (price) => {
+    return price.toLocaleString("tr-TR", {
+      style: "currency",
+      currency: "TRY",
+    });
+  }
 
   return (
     <div className="w-full h-full">
@@ -142,22 +64,9 @@ const AnalysisContent = () => {
             animation: "gradient-move 6s infinite",
           }}
         >
-          <h2
-            className="text-xl font-extrabold"
-            style={{ textShadow: "2px 2px 6px rgba(0, 0, 0, 0.6)" }}
-          >
-            Ülke Ekonomisine Katkı
-          </h2>
-          <p
-            className="text-4xl font-bold mt-4"
-            style={{ textShadow: "3px 3px 10px rgba(0, 0, 0, 0.7)" }}
-          >
-            {economicImpact} ₺
-          </p>
-          <p
-            className="text-sm mt-4"
-            style={{ textShadow: "1px 1px 4px rgba(0, 0, 0, 0.5)" }}
-          >
+          <h2 className="text-xl font-extrabold">Ülke Ekonomisine Katkı</h2>
+          <p className="text-4xl font-bold mt-4">{priceFormatter(economicImpact)} ₺</p>
+          <p className="text-sm mt-4">
             Su tasarrufu ile Türkiye genelinde yapılan toplam ekonomik katkı.
           </p>
         </div>
@@ -170,14 +79,13 @@ const AnalysisContent = () => {
             style={{
               backgroundImage: `url(${waterBG})`,
               backgroundSize: "cover",
-              backgroundPosition: "center",
               backgroundBlendMode: "overlay",
             }}
           >
             <h2 className="text-lg font-semibold mb-4">
               Toplam GRİSTEK Modül Sayısı
             </h2>
-            <p className="text-4xl font-extrabold">{dataj.totalModules}</p>
+            <p className="text-4xl font-extrabold">{totalModules}</p>
             <div className="mt-4 text-sm opacity-75">
               Türkiye genelinde kullanılan modüller.
             </div>
@@ -189,14 +97,11 @@ const AnalysisContent = () => {
             style={{
               backgroundImage: `url(${waterBG})`,
               backgroundSize: "cover",
-              backgroundPosition: "center",
               backgroundBlendMode: "overlay",
             }}
           >
             <h2 className="text-lg font-semibold mb-4">Toplam Su Tasarrufu</h2>
-            <p className="text-4xl font-extrabold">
-              {totalSavings} m³
-            </p>
+            <p className="text-4xl font-extrabold">{totalSavings / 1000} m³</p>
             <div className="mt-4 text-sm opacity-75">
               Tüm modüllerle sağlanan toplam tasarruf.
             </div>
@@ -208,17 +113,16 @@ const AnalysisContent = () => {
             style={{
               backgroundImage: `url(${waterBG})`,
               backgroundSize: "cover",
-              backgroundPosition: "center",
               backgroundBlendMode: "overlay",
             }}
           >
             <h2 className="text-lg font-semibold mb-4">
               En Çok Tasarruf Yapan İl
             </h2>
-            <p className="text-4xl font-extrabold">{topCity}</p>
+            <p className="text-4xl font-extrabold">{topSavingCity.Name}</p>
             <div className="mt-4 text-sm opacity-75">
-              {topCity}, {totalSavings * 1000} litre su tasarrufu ile
-              lider.
+              {topSavingCity.Name}, {topSavingCity.Savings} litre su tasarrufu
+              ile lider.
             </div>
           </div>
         </div>
@@ -263,6 +167,7 @@ const AnalysisContent = () => {
         {modalData && (
           <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
+              {/* Modal Header */}
               <div className="flex justify-between items-center border-b border-gray-200 p-4">
                 <h3 className="text-2xl font-semibold text-gray-900">
                   {modalData.name}
@@ -287,49 +192,71 @@ const AnalysisContent = () => {
                   </svg>
                 </button>
               </div>
+
+              {/* Modal İçerik */}
               <div className="p-6 space-y-6">
+                {/* Modül Sayısı */}
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-medium text-gray-500">
-                    Toplam Modüller
+                    Toplam <b>GRİSTEK</b> Modül Sayısı
                   </span>
                   <span className="text-2xl font-bold text-gray-900">
                     {modalData.modules}
                   </span>
                 </div>
+
+                {/* Tasarruf Miktarı */}
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-medium text-gray-500">
                     Tasarruf Miktarı
                   </span>
                   <span className="text-2xl font-bold text-green-500">
-                    {modalData.savings.toLocaleString()} Litre
+                    {modalData.savings} Litre
                   </span>
                 </div>
+
+                {/* Kullanım Dağılımı */}
                 <div className="border-t pt-4">
                   <h4 className="text-sm font-medium text-gray-500 mb-3">
-                    Kullanım Dağılımı
+                    Modül Kullanım Dağılımı
                   </h4>
-                  <div className="grid grid-cols-3 gap-4 text-center">
-                    <div>
-                      <span className="block text-2xl font-bold text-gray-900">
-                        {modalData.usage.kamu}
-                      </span>
-                      <span className="text-xs text-gray-500">Kamu</span>
-                    </div>
-                    <div>
-                      <span className="block text-2xl font-bold text-gray-900">
-                        {modalData.usage.isyeri}
-                      </span>
-                      <span className="text-xs text-gray-500">İşyeri</span>
-                    </div>
-                    <div>
-                      <span className="block text-2xl font-bold text-gray-900">
-                        {modalData.usage.osb}
-                      </span>
-                      <span className="text-xs text-gray-500">OSB</span>
-                    </div>
+                  <div className="grid grid-cols-4 gap-4 text-center">
+                    {Object.entries(modalData.usage).map(([key, value]) => (
+                      <div key={key}>
+                        <span className="block text-2xl font-bold text-gray-900">
+                          {value}
+                        </span>
+                        <span className="text-xs text-gray-500">
+                          {key.toUpperCase()}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Dağıtılmış Tasarruf */}
+                <div className="border-t pt-4">
+                  <h4 className="text-sm font-medium text-gray-500 mb-3">
+                    Tasarruf Dağılımı (Litre)
+                  </h4>
+                  <div className="grid grid-cols-4 gap-4 text-center">
+                    {Object.entries(modalData.distributedSavings).map(
+                      ([key, value]) => (
+                        <div key={key}>
+                          <span className="block text-2xl font-bold text-gray-900">
+                            {value.toLocaleString()}
+                          </span>
+                          <span className="text-xs text-gray-500">
+                            {key.toUpperCase()}
+                          </span>
+                        </div>
+                      )
+                    )}
                   </div>
                 </div>
               </div>
+
+              {/* Modal Kapat Butonu */}
               <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <button
                   type="button"

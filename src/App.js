@@ -13,9 +13,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Reference from "./pages/Reference";
 import Contact from "./pages/Contact";
 
-import IndividualLogin from "./components/auth/IndividualLogin";
-import DealerLogin from "./components/auth/DealerLogin";
-import CorporateLogin from "./components/auth/CorporateLogin";
+import Login from "./components/auth/Login";
 import Corporate from "./components/dashboard/Corporate";
 import TechnicalSupport from "./components/dashboard/TechnicalSupport";
 
@@ -37,9 +35,7 @@ function App() {
 
           {/* Layout Kullanılmayan Rotalar */}
           <Route path="/" element={<Home />} />
-          <Route path="/bireysel-giris" element={<IndividualLogin />} />
-          <Route path="/bayi-giris" element={<DealerLogin />} />
-          <Route path="/kurumsal-giris" element={<CorporateLogin />} />
+          <Route path="/kurumsal-giris" element={<Login />} />
           <Route
             path="/kurumsal"
             element={

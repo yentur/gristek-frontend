@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import user_logo from "../../dist/images/user.png"
+import user_logo from "../../dist/images/user2.png"
 
 const Topbar = ({ organizationName, toggleSidebar }) => {
-    const [userName, setUserName] = useState("Kullanıcı Adı");
-    const [userRole, setUserRole] = useState("Yönetici");
     const [userAvatar, setUserAvatar] = useState(user_logo);
 
     return (
@@ -29,12 +27,11 @@ const Topbar = ({ organizationName, toggleSidebar }) => {
                 <div className="flex items-center space-x-2">
                     <img
                         src={userAvatar}
-                        alt={userName}
+                        alt={organizationName}
                         className="w-8 h-8 md:w-12 md:h-12 rounded-full border-2 border-gray-300 shadow-md"
                     />
                     <div className="hidden md:block">
-                        <p className="font-semibold truncate text-gray-800">{userName}</p>
-                        <p className="text-sm text-gray-500">{userRole}</p>
+                        <p className="font-semibold truncate text-gray-800">{organizationName}</p>
                     </div>
                 </div>
             </div>

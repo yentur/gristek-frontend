@@ -116,14 +116,42 @@ const CalculatorContent = () => {
     }
   }, [selectedCity, selectedHomeType]);
 
+  const calculateElectricityCost = (savingsAmount, selectedWC) => {
+    const electricityPrice = 2.5; // kWh başına 2.5 TL
+
+    // Motor Gücü (Pompa)
+    const motorPowerW = (120 + 156) / 2; // Ortalama 138 W
+    const motorPowerKWh = motorPowerW / 1000; // 0.138 kWh
+
+    const flowRatePerMin = (25 + 19) / 2; // Ortalama 22 L/dak
+    const flowRatePerHour = flowRatePerMin * 60; // 1320 L/saat
+
+    const motorHoursPerMonth = savingsAmount / flowRatePerHour; // Motorun kaç saat çalışacağı
+    const motorMonthlyCost =
+      motorPowerKWh * motorHoursPerMonth * electricityPrice;
+
+    // UV Işık Tüketimi
+    const uvPowerW = 5; // Ortalama 5W
+    const uvPowerKWh = (uvPowerW * 24 * 30) / 1000; // Aylık tüketim
+    const uvMonthlyCost = uvPowerKWh * electricityPrice;
+
+    // Bilinmeyen Ek Harcamalar (~%15 ek maliyet)
+    const unknownCostFactor = 1.15;
+
+    // **Toplam Elektrik Maliyeti**
+    const totalElectricityCost =
+      (motorMonthlyCost + uvMonthlyCost) * unknownCostFactor;
+
+    return totalElectricityCost;
+  };
+
   const calculateResults = () => {
     if (!cost || !selectedDays || !selectedWorkers || !selectedHours) return;
 
     const savingsAmount = selectedDays * selectedWorkers * selectedHours * 4;
-    const savingsValue =
-      (cost * selectedDays * selectedWorkers * selectedHours * 4) / 1000;
-    const filterCost = calcultedData["filter"] * selectedWCL;
-    const electricityCost = calcultedData["electric"] * selectedWCL;
+    const savingsValue = (cost * selectedDays * selectedWorkers * selectedHours * 4) / 1000;
+    const filterCost = Math.ceil(savingsAmount / 100000) * 500 * selectedWC;
+    const electricityCost = calculateElectricityCost(savingsAmount, selectedWC);
     const netProfit = savingsValue - (electricityCost + filterCost);
 
     setResults({

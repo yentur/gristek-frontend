@@ -48,7 +48,7 @@ const Header = () => {
       <div className="container-md mx-auto flex items-center justify-center md:justify-between px-4">
         {/* Logo */}
         <a href="/" className="flex items-center justify-center">
-          <img src={logo} alt="Logo" className="h-8 md:h-16 md:w-auto" />
+          <img src={logo} alt="Logo" className="h-6 md:h-12 md:w-auto" />
         </a>
 
         {/* Desktop Menu */}
